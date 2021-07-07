@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const axios = require('axios').default;
 const routerDiet = require('./diet.js')
 const routerRecipe = require ('./recipe.js')
 // Importar todos los routers;
@@ -9,8 +10,8 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.use('/diets', routerDiet);
-router.use('/recipes', routerRecipe);
+router.use('/', routerDiet);
+router.use('/', routerRecipe);
 router.get('/', (req,res)=> {
 	res.send('Hola soy la landing page')
 })
