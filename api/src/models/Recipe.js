@@ -5,38 +5,29 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('recipe', {
     id: {
-      type: DataTypes.INTEGER
-    },
-    uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       unique: true,
       primaryKey: true,
     },
-    title: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
-      
+      unique: true,
     },
     summary: {
       type: DataTypes.TEXT,
       allowNull: false,
-      
     },
-    spoonacularScore: {
+    score: {
       type: DataTypes.STRING,
-      
     },
     healthScore: {
       type: DataTypes.INTEGER,
-      
     },
     instructions: {
       type: DataTypes.TEXT,
-    },
-    analyzedInstructions: {
-      type: DataTypes.ARRAY(DataTypes.ARRAY(DataTypes.JSON)) // DataTypes.JSON directo?
     },
     vegetarian: {
       type: DataTypes.BOOLEAN,
@@ -49,17 +40,7 @@ module.exports = (sequelize) => {
     }, 
     dairyFree: {
       type: DataTypes.BOOLEAN,
-    },
-    sourceUrl: {
-      type: DataTypes.TEXT,
-    }, 
-    image: {
-      type: DataTypes.TEXT,
-    }, 
-    dietArray: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-    }, 
-     
-    
+    }   
   });
+  
 };
