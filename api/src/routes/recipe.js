@@ -16,30 +16,25 @@ router.get('/recipes', async (req, res, next) => {
 	let promiseApi; // va a ser un array
 	if (req.query.query) {
 		try {
-			promiseApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${API_KEY_1}&number=1&addRecipeInformation=true`)
-			if (!apiResponse.data.results.length) {
-				return res.send(`Your search has ${apiResponse.data.results.length} results`)
-			} else {
-				let apiResponse =  promiseApi.data.results[0];
-				let { id, title, summary, spoonacularScore, healthScore, analyzedInstructions, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets } = recipe;
-					return  Recipe.create({ id, title, summary, spoonacularScore, healthScore, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, 
-																	dietArray: diets,
-																	analyzedInstructions: analyzedInstructions.steps,
-					})
-			
-				Promise.all([promises])
-				.catch(err => {
-					next(err)
-				})
-				console.log('recipes insertadas en DB')
-				//console.log(apiResponse.data.results)
-				return res.json('Recipe de la API creada en DB')
+			promiseApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${API_KEY_2}&number=100&addRecipeInformation=true`)
+			if (!promiseApi.data.results.length) {
+				return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`)
 			}
+				let apiResponse =  [];
+				promiseApi.data.results.forEach(recipe => {
+					let { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image } = recipe;
+					let result = { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image };
+					apiResponse.push(result)
+				});
+				//console.log(apiResponse.length)
+				
+			return res.json(apiResponse)
+			
 		} catch (err) {
-			console.log(err);
+		next(err);
 		}
 	}
-	res.send('hola soy recipe')
+	
 })
 
 
@@ -54,8 +49,9 @@ router.get('/recipes/:idReceta', (req, res) => {
 		// y el resultado[0] res.send
 
 		let apiResponse =  promiseApi.data.results[0];
-				let { id, title, summary, spoonacularScore, healthScore, analyzedInstructions, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets } = apiresponse;
-		//crear un objeto donde guardo las cosas que me trae la api
+			let { id, title, summary, spoonacularScore, healthScore, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets } = recipe;
+					let result = {id, title, summary, spoonacularScore, healthScore, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets };
+				//crear un objeto donde guardo las cosas que me trae la api
 // NO HACE FALTA ! --> pushear el en una variable array instrucciones las apiresponse.analyzedInstructions.map(e => e.steps) o algo asi, despues joinearlo en un unico string
 // y ahi recien ahi meterlo en el objeto creado anteriormente
 // filtrar con regex el summary antes de mandarlo (sacarles los tags) 
