@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      allowNull: false,
       unique: true,
       primaryKey: true,
     },
@@ -21,26 +20,14 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     score: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
     healthScore: {
       type: DataTypes.INTEGER,
     },
     instructions: {
       type: DataTypes.TEXT,
-    },
-    vegetarian: {
-      type: DataTypes.BOOLEAN,
-    },
-    vegan: {
-      type: DataTypes.BOOLEAN,
-    },
-    glutenFree: {
-      type: DataTypes.BOOLEAN,
-    }, 
-    dairyFree: {
-      type: DataTypes.BOOLEAN,
-    }   
+    }
   });
   
 };
