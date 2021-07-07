@@ -1,10 +1,10 @@
-require('dotenv').config();
+//require('dotenv').config();
 const { Op } = require("sequelize")
 const router = require('express').Router();
 const axios = require('axios').default;
 const { Diet, Recipe } = require('../db.js'); // se importa de db.js porque ahi es donde se leen por fs.readdirSync los archivos de models y se exportan por sequelize.models
-const { API_KEY_1, API_KEY_2, API_KEY_3, API_KEY_4, API_KEY_5 } = process.env;
-
+//const { API_KEY_1, API_KEY_2, API_KEY_3, API_KEY_4, API_KEY_5 } = process.env;
+const { BASE_URL, URL_FLAGS, API_KEY_1, API_KEY_2, API_KEY_3, API_KEY_4, API_KEY_5 } = require('../constants');
 
 
 router.get('/recipes', async (req, res, next) => {
@@ -15,8 +15,7 @@ router.get('/recipes', async (req, res, next) => {
 	// 						* Si no existe ninguna receta mostrar un mensaje adecuado // OK
 
 	let { name } = req.query;
-	let promiseApi = []; // va a ser un array de maximo 100 recetas
-	let recipesDB = [];
+	let recipesDB;
 	if (req.query.name) {
 		Recipe.findAll({
 			where: {
@@ -26,18 +25,18 @@ router.get('/recipes', async (req, res, next) => {
 			}
 		})
 			.then(ans => {
-				recipesDB.push(ans);
+				recipesDB = ans;
 			})
 			.catch(err => next(err));
 		try {
-			promiseApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=${API_KEY_2}&number=100&addRecipeInformation=true`)
+			let promiseApi = await axios.get(`${BASE_URL}?query=${name}&apiKey=${API_KEY_2}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
 				return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
 			} 
 			let apiResponse = [];
 			promiseApi.data.results.forEach(recipe => {
-				let { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image } = recipe;
-				let result = { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image };
+				let { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets } = recipe;
+				let result = { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets };
 				apiResponse.push(result);
 			});
 	
