@@ -58,12 +58,11 @@ async function getRecipeById(req, res, next) {
 					infoDev: 'Id requested not found in database',
 				});
 			}
-		} catch (err) { // este catch estaria de mas, ya estoy controlando si el findOne me devuelve [] en el else
+		} catch (err) {
 			next(err)
 		};
 	};
-	if (/^[^A-Za-z]+$/i.test(idReceta)) { // regex para testear que idReceta sea unicamente un numero, sin caracteres en ningun lado
-		// parseInt no funcionaba si habia caracteres despues del numero!
+	if (/^[^A-Za-z]+$/i.test(idReceta)) {
 		let promiseApi;
 		try {
 			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_2}`);
@@ -71,17 +70,10 @@ async function getRecipeById(req, res, next) {
 			let result = { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, summary, spoonacularScore, healthScore, instructions };
 			return res.json(result)
 		} catch (err) {
-			console.log('DEMASIADOS NUMEROOOOOOOOOS---------------')
-			//next(err) // pasa el error y lo consologea al final desde el endware de app.js, pero lo pasa de esa forma concreta
-			// si quiero manejarlo aca, no tengo que usar next
 			return res.status(404).json({
 				...err.response.data, infoDev: 'Id requested not found in API'})
 		}
 	};
-
-	// res.status(404).send('Invalid id: Recipe Id must be a number') no haria falta, los cases estan cubiertos
-
-	
 };
 
 async function createRecipe(req, res, next) {
