@@ -13,7 +13,7 @@ router.get('/recipes', async (req, res, next) => {
 	// 						* Si no existe ninguna receta mostrar un mensaje adecuado // OK
 
 	let { name } = req.query;
-	let recipesDB =[]; // OJO, ver si conviene no definir
+	let recipesDB = []; // OJO, ver si conviene no definir
 	if (req.query.name) {
 		Recipe.findAll({
 			where: {
@@ -27,27 +27,26 @@ router.get('/recipes', async (req, res, next) => {
 			})
 			.catch(err => next(err));
 		try {
-			let promiseApi = await axios.get(`${BASE_URL}?query=${name}&apiKey=${API_KEY_2}&${URL_FLAGS}`)
+			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_2}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
 				return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
-			} 
+			}
 			let apiResponse = [];
 			promiseApi.data.results.forEach(recipe => {
 				let { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets } = recipe;
 				let result = { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets };
 				apiResponse.push(result);
 			});
-	
-			return res.json(recipesDB.concat(apiResponse));
+
+			return res.json(recipesDB.concat(apiResponse)); // al devolver la info, puedo filtrarla desde el front, creo
 		} catch (err) {
 			next(err);
 		}
 	}
 
-})
+});
 
-
-router.get('/recipes/:idReceta', (req, res) => {
+router.get('/recipes/:idReceta', async (req, res, next) => {
 
 	// -	GET /recipes/{idReceta}:
 	// 					*	Obtener el detalle de una receta en particular
@@ -56,59 +55,57 @@ router.get('/recipes/:idReceta', (req, res) => {
 	// para identificarla, desde el front tendria que haber un boton que diga (Detail) y al ser clikeado
 	// venga a esta ruta y haga una consulta a la api /recipe/{idReceta}/information?apikey
 	// y el resultado[0] res.send
-
-
-// 	router.get('/:urlTitle', function (req, res, next) {
-//   // Modificar para que cuando se seleccione un "Page" en particular se muestren
-//   // los datos asociados al mismo
-//   // Tu código acá:
-//   Page.findOne({
-//     where: {
-//       urlTitle: req.params.urlTitle
-//     }
-//   }).then(page => {
-//     return page ? res.render('page', { page }) : res.status(404).render('error')
-//   }).catch(error => next(error))
-// });
-
-	let apiResponse = promiseApi.data.results[0];
-	let { id, title, summary, spoonacularScore, healthScore, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets } = recipe;
-	let result = { id, title, summary, spoonacularScore, healthScore, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets };
-	//crear un objeto donde guardo las cosas que me trae la api
-	// NO HACE FALTA ! --> pushear el en una variable array instrucciones las apiresponse.analyzedInstructions.map(e => e.steps) o algo asi, despues joinearlo en un unico string
-	// y ahi recien ahi meterlo en el objeto creado anteriormente
-	// filtrar con regex el summary antes de mandarlo (sacarles los tags) 
-	// res.json(objeto) y en el front lo presentamos
-
-	res.send('hola soy recipe')
-})
+	let { idReceta } = req.params;
+	if (idReceta.length === 36) {
+		try {
+			let result = await Recipe.findOne({
+				where: {
+					id: idReceta
+				}
+			});
+			return res.json(result)
+		} catch (err) {
+			next(err)
+		}
+	};
+	if (typeof parseInt(idReceta) === 'number') {
+		try {
+			let promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_2}`);
+			if (promiseApi.data.message) res.status(404).send(promiseApi.data);
+			let { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets, instructions } = promiseApi.data;
+			let result = { id, title, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets, instructions };
+			return res.json(result)
+		} catch (err) {
+			next(err);
+		}
+	}
+});
 
 router.post('/recipe', async (req, res, next) => {
 
 	// --	POST /recipe:
 	// 					*	Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body // OK, VA POR BODY
-	// 					*	Crea una receta en la base de datos // OK LO HACE, FALTA EL VINCULO CON DIETS
-	// findOrCreate, si el segundo argumento es true, 'Choose another name for your recipe'
-	// el find tiene que buscar por name.toLowerCase === body.name.toLowerCase
-	// si es false, la crea y hace un redirect a la receta || 'Your recipe {recipe.name} has been created!, The recipe id is {recipe.id}'
-	let { name, summary, score, healthScore, instructions, dietTypes } = req.body;
-	let [recipe, created] = await Recipe.findOrCreate({
-		where : {
-			name,
-			summary,
-			score,
-			healthScore,
-			instructions,
-			dietTypes // son numeros. Ver en el front como identificar dietas con numeros (checkbox a numeros, formularios, etc)
-		}
-	})
-	if (created) recipe.setDiets(dietTypes); // si fue creada, entonces seteo esto, si fue encontrada, no tengo que setearlo 
-																					// el error de validacion lo tira si posteo lo mismo con dietas distintas
-																					// podria limpiar las dietsId de la tabla intermedia, pero deberia ver si hay un metodo
+	// 					*	Crea una receta en la base de datos // OK LO HACE, VINCULOS TAMBIEN HECHOS
 
-	res.json(recipe)
+	try {
+		let { name, summary, score, healthScore, instructions, dietTypes } = req.body;
+		let [recipe, created] = await Recipe.findOrCreate({
+			where: {
+				name,
+				summary,
+				score,
+				healthScore,
+				instructions,
+				dietTypes // son numeros. Ver en el front como identificar dietas con numeros (checkbox value=numero!!, formularios, etc)
+			}
+		});
+		if (created) recipe.setDiets(dietTypes);
+		res.json(recipe);
+	} catch (err) {
+		next(err);
+	}
+});
 
-})
 
 // ruta put para editar
 //ruta delete para borrar
