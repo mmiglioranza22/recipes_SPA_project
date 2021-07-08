@@ -1,9 +1,7 @@
-//require('dotenv').config();
 const { Op } = require("sequelize")
 const router = require('express').Router();
 const axios = require('axios').default;
 const { Diet, Recipe } = require('../db.js'); // se importa de db.js porque ahi es donde se leen por fs.readdirSync los archivos de models y se exportan por sequelize.models
-//const { API_KEY_1, API_KEY_2, API_KEY_3, API_KEY_4, API_KEY_5 } = process.env;
 const { BASE_URL, URL_FLAGS, API_KEY_1, API_KEY_2, API_KEY_3, API_KEY_4, API_KEY_5 } = require('../constants');
 
 
@@ -15,7 +13,7 @@ router.get('/recipes', async (req, res, next) => {
 	// 						* Si no existe ninguna receta mostrar un mensaje adecuado // OK
 
 	let { name } = req.query;
-	let recipesDB;
+	let recipesDB =[]; // OJO, ver si conviene no definir
 	if (req.query.name) {
 		Recipe.findAll({
 			where: {
@@ -59,6 +57,20 @@ router.get('/recipes/:idReceta', (req, res) => {
 	// venga a esta ruta y haga una consulta a la api /recipe/{idReceta}/information?apikey
 	// y el resultado[0] res.send
 
+
+// 	router.get('/:urlTitle', function (req, res, next) {
+//   // Modificar para que cuando se seleccione un "Page" en particular se muestren
+//   // los datos asociados al mismo
+//   // Tu código acá:
+//   Page.findOne({
+//     where: {
+//       urlTitle: req.params.urlTitle
+//     }
+//   }).then(page => {
+//     return page ? res.render('page', { page }) : res.status(404).render('error')
+//   }).catch(error => next(error))
+// });
+
 	let apiResponse = promiseApi.data.results[0];
 	let { id, title, summary, spoonacularScore, healthScore, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets } = recipe;
 	let result = { id, title, summary, spoonacularScore, healthScore, vegetarian, vegan, glutenFree, dairyFree, sourceUrl, image, diets };
@@ -71,29 +83,30 @@ router.get('/recipes/:idReceta', (req, res) => {
 	res.send('hola soy recipe')
 })
 
-router.post('/recipe', (req, res, next) => {
+router.post('/recipe', async (req, res, next) => {
 
 	// --	POST /recipe:
-	// 					*	Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body
-	// 					*	Crea una receta en la base de datos
+	// 					*	Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body // OK, VA POR BODY
+	// 					*	Crea una receta en la base de datos // OK LO HACE, FALTA EL VINCULO CON DIETS
 	// findOrCreate, si el segundo argumento es true, 'Choose another name for your recipe'
 	// el find tiene que buscar por name.toLowerCase === body.name.toLowerCase
 	// si es false, la crea y hace un redirect a la receta || 'Your recipe {recipe.name} has been created!, The recipe id is {recipe.id}'
-	let { name, summary, score, healthScore, instructions } = req.body;
-	let newRecipe = { name, summary, score, healthScore, instructions };
-
-	console.log(req.body)
-	Recipe.findOrCreate({
+	let { name, summary, score, healthScore, instructions, dietTypes } = req.body;
+	let [recipe, created] = await Recipe.findOrCreate({
 		where : {
 			name,
 			summary,
 			score,
 			healthScore,
-			instructions
+			instructions,
+			dietTypes // son numeros. Ver en el front como identificar dietas con numeros (checkbox a numeros, formularios, etc)
 		}
 	})
+	if (created) recipe.setDiets(dietTypes); // si fue creada, entonces seteo esto, si fue encontrada, no tengo que setearlo 
+																					// el error de validacion lo tira si posteo lo mismo con dietas distintas
+																					// podria limpiar las dietsId de la tabla intermedia, pero deberia ver si hay un metodo
 
-	res.send('recipe post route: recipe creada en DB')
+	res.json(recipe)
 
 })
 
