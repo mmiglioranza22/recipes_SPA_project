@@ -13,14 +13,10 @@ async function getAllRecipes(req, res, next) {
 						[Op.iLike]: `%${name}%`
 					}
 				},
-				attributes: {
-					exclude: ['id', 'createdAt', 'updatedAt', 'dietTypes']
-				},
+				attributes:['name', 'summary', 'score', 'healthScore', 'instructions'],
 				include: {
 					model: Diet,
-					attributes: {
-						exclude: ['id', 'createdAt', 'updatedAt']
-					},
+					attributes: ['name']
 				}
 			}); // no puedo filtrar la junction table
 
@@ -38,7 +34,7 @@ async function getAllRecipes(req, res, next) {
 			// si quiero filtrar dietType (dato redundante, ya me viene por el join), es acá donde tengo que filtrarlo,
 			// recipesDB = {...recipesDB, delete dietType} o algo asi, asignar todo menos el dietType a un nuevo objeto y devolver este ultimo
 			// ver mas adelante con el front
-			return res.json(recipesDB.concat(apiResponse)); // al devolver la info, puedo filtrarla desde el front, creo
+			res.json(recipesDB.concat(apiResponse)); // al devolver la info, puedo filtrarla desde el front, creo
 		} catch (err) {
 			next(err);
 		}
@@ -82,7 +78,7 @@ async function getRecipeById(req, res, next) {
 	if (/^[^A-Za-z]+$/i.test(idReceta)) {
 		let promiseApi;
 		try {
-			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_2}`);
+			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_3}`);
 			let { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, summary, spoonacularScore, healthScore, instructions } = promiseApi.data;
 			let result = { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, summary, spoonacularScore, healthScore, instructions };
 			return res.json(result)
