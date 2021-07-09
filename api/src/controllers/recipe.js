@@ -5,21 +5,26 @@ const { BASE_URL, URL_FLAGS, API_KEY_1, API_KEY_2, API_KEY_3, API_KEY_4, API_KEY
 
 async function getAllRecipes(req, res, next) {
 	let { name } = req.query;
-	let recipesDB = [];
 	if (req.query.name) {
-		Recipe.findAll({
-			where: {
-				name: {
-					[Op.iLike]: `%${name}%`
-				}
-			}
-		})
-			.then(ans => {
-				recipesDB = ans;
-			})
-			.catch(err => next(err));
 		try {
-			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_2}&${URL_FLAGS}`)
+			let recipesDB = await Recipe.findAll({ 
+				where: {
+					name: {
+						[Op.iLike]: `%${name}%`
+					}
+				},
+				attributes: {
+					exclude: ['id', 'createdAt', 'updatedAt', 'dietTypes']
+				},
+				include: {
+					model: Diet,
+					attributes: {
+						exclude: ['id', 'createdAt', 'updatedAt']
+					},
+				}
+			}); // no puedo filtrar la junction table
+
+			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_3}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
 				return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
 			}
@@ -30,6 +35,9 @@ async function getAllRecipes(req, res, next) {
 				apiResponse.push(result);
 			});
 
+			// si quiero filtrar dietType (dato redundante, ya me viene por el join), es acá donde tengo que filtrarlo,
+			// recipesDB = {...recipesDB, delete dietType} o algo asi, asignar todo menos el dietType a un nuevo objeto y devolver este ultimo
+			// ver mas adelante con el front
 			return res.json(recipesDB.concat(apiResponse)); // al devolver la info, puedo filtrarla desde el front, creo
 		} catch (err) {
 			next(err);
@@ -45,6 +53,15 @@ async function getRecipeById(req, res, next) {
 			let result = await Recipe.findOne({
 				where: {
 					id: idReceta
+				},
+				attributes: {
+					exclude: ['id', 'createdAt', 'updatedAt', 'dietTypes']
+				},
+				include: {
+					model: Diet,
+					attributes: {
+						exclude: ['id', 'createdAt', 'updatedAt']
+					},
 				}
 			});
 			if (result) {
@@ -53,7 +70,7 @@ async function getRecipeById(req, res, next) {
 				return res.status(404).json({
 					status: 404,
 					code: 0,
-					message: "We're so sorry, something went wrong. If this error persists, please contact us.",
+					message: "We're so sorry, something went wrong.",
 					link: null,
 					infoDev: 'Id requested not found in database',
 				});
@@ -71,7 +88,8 @@ async function getRecipeById(req, res, next) {
 			return res.json(result)
 		} catch (err) {
 			return res.status(404).json({
-				...err.response.data, infoDev: 'Id requested not found in API'})
+				...err.response.data, infoDev: 'Id requested not found in API'
+			})
 		}
 	};
 };
@@ -90,7 +108,7 @@ async function createRecipe(req, res, next) {
 			}
 		});
 		if (created) recipe.setDiets(dietTypes);
-		res.json(recipe);
+		return res.json(recipe);
 	} catch (err) {
 		next(err);
 	}
