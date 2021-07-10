@@ -19,7 +19,6 @@ async function getAllRecipes(req, res, next) {
 					attributes: ['name']
 				}
 			});
-
 			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_3}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
 				return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
@@ -47,7 +46,7 @@ async function getRecipeById(req, res, next) {
 			let result = promiseApi.data;
 			return res.json(result)
 		} catch (err) {
-			return next(err) // tengo que hacer return sino sigue la ejecucion y matchea el ultimo if
+			return next(err) 
 		}
 	};
 	if (idReceta && idReceta.length === 36) {
@@ -72,7 +71,7 @@ async function getRecipeById(req, res, next) {
 			next(err)
 		};
 	}
-	if (idReceta && idReceta.length !== 36) { // llega aca si y solo si no era un uuid valido. Tampoco si eran solo numeros, porque se retorno el next dentro del catch en el primer if
+	if (idReceta && idReceta.length !== 36) { 
 		try {
 			throw new TypeError('ERROR 404: Invalid Id (Id is not a valid UUID type nor valid integer type).')
 		} catch (err) {
@@ -113,16 +112,16 @@ function editRecipe(req, res, next) {
 		}
 	})
 		.then(editedRecipe => {
-			res.send(editedRecipe) // devuelve un array con [1], codigo 200
+			res.send(editedRecipe) 
 		})
-		.catch(err => next(err)) // cuando entraria al catch?
+		.catch(err => next(err)) 
 }
 
 async function deleteRecipe(req, res, next) {
 	const name = req.params.name;
 	try {
-		let existsInDB = await Recipe.findOne({ // lo busca primero porque si no, al borrar mas de una vez lo mismo (o si la db esta vacia), manda status 200
-			where: {															// entonces si o si necesita un throw error para nextear
+		let existsInDB = await Recipe.findOne({ 
+			where: {															
 				name,
 			}
 		});
