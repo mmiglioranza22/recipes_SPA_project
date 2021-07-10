@@ -18,7 +18,7 @@ async function getAllRecipes(req, res, next) {
 					model: Diet,
 					attributes: ['name']
 				}
-			}); 
+			});
 
 			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_3}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
@@ -71,16 +71,14 @@ async function getRecipeById(req, res, next) {
 		} catch (err) {
 			next(err)
 		};
-	} 
-	if (idReceta && idReceta.length !== 36 ){ // llega aca si y solo si no era un uuid valido. Tampoco si eran solo numeros, porque se retorno el next dentro del catch en el primer if
+	}
+	if (idReceta && idReceta.length !== 36) { // llega aca si y solo si no era un uuid valido. Tampoco si eran solo numeros, porque se retorno el next dentro del catch en el primer if
 		try {
-		throw new TypeError('ERROR 404: Invalid Id (Id is not a valid UUID type nor valid integer type).')
+			throw new TypeError('ERROR 404: Invalid Id (Id is not a valid UUID type nor valid integer type).')
 		} catch (err) {
 			next(err)
-		}	
-	}
-		;
-
+		}
+	};
 };
 
 async function createRecipe(req, res, next) {
@@ -103,8 +101,49 @@ async function createRecipe(req, res, next) {
 	}
 };
 
+
+//--not required
+
+function editRecipe(req, res, next) {
+	const { name } = req.params;
+	const edit = req.body;
+	return Recipe.update(edit, {
+		where: {
+			name
+		}
+	})
+		.then(editedRecipe => {
+			res.send(editedRecipe) // devuelve un array con [1], codigo 200
+		})
+		.catch(err => next(err)) // cuando entraria al catch?
+}
+
+async function deleteRecipe(req, res, next) {
+	const name = req.params.name;
+	try {
+		let existsInDB = await Recipe.findOne({ // lo busca primero porque si no, al borrar mas de una vez lo mismo (o si la db esta vacia), manda status 200
+			where: {															// entonces si o si necesita un throw error para nextear
+				name,
+			}
+		});
+		if (existsInDB) {
+			Recipe.destroy({
+				where: {
+					name,
+				}
+			});
+			return res.status(200).send('Recipe has been deleted from database successfully')
+		}
+		else throw new Error('ERROR 500: Recipe with given name does not exist in database')
+	} catch (err) {
+		next(err)
+	}
+}
+
 module.exports = {
 	getAllRecipes,
 	getRecipeById,
-	createRecipe
+	createRecipe,
+	editRecipe,
+	deleteRecipe
 }

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { getAllRecipes, getRecipeById, createRecipe } = require('../controllers/recipe');
+const { getAllRecipes, getRecipeById, createRecipe, editRecipe, deleteRecipe } = require('../controllers/recipe');
 
 router.get('/recipes', getAllRecipes);
 
@@ -35,5 +35,7 @@ router.post('/recipe', createRecipe);
 
 
 // ruta put para editar
+router.put('/recipes/:name', editRecipe)
 //ruta delete para borrar
+router.delete('/recipes/:name', deleteRecipe)
 module.exports = router;
