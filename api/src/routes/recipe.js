@@ -4,7 +4,7 @@ const { getAllRecipes, getRecipeById, createRecipe, editRecipe, deleteRecipe } =
 router.get('/recipes', getAllRecipes);
 
 		//  GET /recipes?name="...":
-		// Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
+		// Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter // OK ENTIENDO QUE LAS PRIMERAS 9 DE LAS 100 EN TOTAL QUE TRAEMOS
 		// Si no existe ninguna receta mostrar un mensaje adecuado
 
 		// Imagen // ok
@@ -20,7 +20,7 @@ router.get('/recipes/:idReceta', getRecipeById);
 
 				// Ruta de detalle de receta: debe contener
 
-				//  Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta) // tdp debe ser gluten free y eso
+				//  Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta) // OK
 				//  Resumen del plato // ok
 				//  Puntuación // ok
 				//  Nivel de "comida saludable" // ok
@@ -33,9 +33,10 @@ router.post('/recipe', createRecipe);
 		// Crea una receta en la base de datos // OK HECHO, Y LE VINCULA EL TIPO DE DIETA
 
 
+//--not required--
 
-// ruta put para editar
 router.put('/recipes/:name', editRecipe)
-//ruta delete para borrar
+
 router.delete('/recipes/:name', deleteRecipe)
+
 module.exports = router;

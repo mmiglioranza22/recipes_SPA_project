@@ -25,8 +25,8 @@ async function getAllRecipes(req, res, next) {
 			}
 			let apiResponse = [];
 			promiseApi.data.results.forEach(recipe => {
-				let { image, title, diets, vegetarian, vegan, glutenFree, dairyFree } = recipe;
-				let result = { image, title, diets, vegetarian, vegan, glutenFree, dairyFree };
+				let { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes } = recipe;
+				let result = { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes };
 				apiResponse.push(result);
 			});
 			res.json(recipesDB.concat(apiResponse));
@@ -34,7 +34,6 @@ async function getAllRecipes(req, res, next) {
 			next(err);
 		}
 	}
-
 };
 
 async function getRecipeById(req, res, next) {
@@ -43,10 +42,11 @@ async function getRecipeById(req, res, next) {
 		let promiseApi;
 		try {
 			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_3}`);
-			let result = promiseApi.data;
+			let { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = promiseApi.data; // es spoonacularScore y NO aggregateLikes
+			let result = 	{image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } // sino, aca score : aggregateLikes 
 			return res.json(result)
 		} catch (err) {
-			return next(err) 
+			return next(err)
 		}
 	};
 	if (idReceta && idReceta.length === 36) {
@@ -71,7 +71,7 @@ async function getRecipeById(req, res, next) {
 			next(err)
 		};
 	}
-	if (idReceta && idReceta.length !== 36) { 
+	if (idReceta && idReceta.length !== 36) {
 		try {
 			throw new TypeError('ERROR 404: Invalid Id (Id is not a valid UUID type nor valid integer type).')
 		} catch (err) {
@@ -100,8 +100,7 @@ async function createRecipe(req, res, next) {
 	}
 };
 
-
-//--not required
+//--not required--
 
 function editRecipe(req, res, next) {
 	const { name } = req.params;
@@ -112,16 +111,16 @@ function editRecipe(req, res, next) {
 		}
 	})
 		.then(editedRecipe => {
-			res.send(editedRecipe) 
+			res.send(editedRecipe)
 		})
-		.catch(err => next(err)) 
+		.catch(err => next(err))
 }
 
 async function deleteRecipe(req, res, next) {
 	const name = req.params.name;
 	try {
-		let existsInDB = await Recipe.findOne({ 
-			where: {															
+		let existsInDB = await Recipe.findOne({
+			where: {
 				name,
 			}
 		});
