@@ -9,6 +9,7 @@ async function getDiets(req, res, next) {
 		res.json(diets);
 
 		// es necesario asociarles las recipes? entiendo que no porque ya lo hace setDiets en createRecipe
+		// hay que hacer un createDiets? README habla de 'En un principio..', pero desde el vamos se cargan todas las dietas posibles, las del array!
 	} catch (err) {
 		next(err);
 	}

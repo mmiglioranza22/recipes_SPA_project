@@ -7,7 +7,7 @@ async function getAllRecipes(req, res, next) {
 	let { name } = req.query;
 	if (req.query.name) {
 		try {
-			let recipesDB = await Recipe.findAll({
+			let recipesDB = await Recipe.findAll({ // no puedo usar sin await y con promise all porque me conctatena la promesa no resuelta.
 				where: {
 					name: {
 						[Op.iLike]: `%${name}%`
@@ -24,7 +24,7 @@ async function getAllRecipes(req, res, next) {
 				return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
 			}
 			let apiResponse = [];
-			promiseApi.data.results.forEach(recipe => {
+			promiseApi.data.results.forEach(recipe => { // entiendo que no puedo usar promise all abajo, porque tengo que filtrar la informacion de la api antes de devolverla
 				let { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes } = recipe;
 				let result = { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes };
 				apiResponse.push(result);
