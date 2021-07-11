@@ -7,7 +7,7 @@ async function getAllRecipes(req, res, next) {
 	let { name } = req.query;
 	if (req.query.name) {
 		try {
-			let recipesDB = await Recipe.findAll({ // no puedo usar sin await y con promise all porque me conctatena la promesa no resuelta.
+			let recipesDB = await Recipe.findAll({ // no puedo usar sin await y con promise all porque me conctatena la promesa no resuelta, y para que usar promise all con un unico elemento
 				where: {
 					name: {
 						[Op.iLike]: `%${name}%`
