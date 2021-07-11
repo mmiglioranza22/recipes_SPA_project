@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//aca traigo la store, la comparto con el Provider e importo react router dom para compartir el BrowserRouter
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
