@@ -25,12 +25,12 @@ async function getAllRecipes(req, res, next) {
 			}
 			let apiResponse = [];
 			promiseApi.data.results.forEach(recipe => { // entiendo que no puedo usar promise all abajo, porque tengo que filtrar la informacion de la api antes de devolverla
-				let { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes } = recipe;
-				let result = { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes };
+				let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes } = recipe;
+				let result = { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes };
 				apiResponse.push(result);
 			});
 			res.json(recipesDB.concat(apiResponse));
-		} catch (err) {
+		} catch (err) { // ver cuando rompe y entra aca, que casos, para ver que mando al front
 			next(err);
 		}
 	}
@@ -42,8 +42,8 @@ async function getRecipeById(req, res, next) {
 		let promiseApi;
 		try {
 			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_3}`);
-			let { image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = promiseApi.data; // es spoonacularScore y NO aggregateLikes
-			let result = 	{image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } // sino, aca score : aggregateLikes 
+			let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = promiseApi.data; // es spoonacularScore y NO aggregateLikes
+			let result = 	{ id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } // sino, aca score : aggregateLikes 
 			return res.json(result)
 		} catch (err) {
 			return next(err)
@@ -102,36 +102,36 @@ async function createRecipe(req, res, next) {
 
 //--not required--
 
-function editRecipe(req, res, next) {
-	const { name } = req.params;
-	const edit = req.body;
-	return Recipe.update(edit, {
+function updateRecipe(req, res, next) {
+	const { id } = req.params;
+	const changes = req.body;
+	return Recipe.update(changes, {
 		where: {
-			name
+			id
 		}
 	})
-		.then(editedRecipe => {
-			res.send(editedRecipe)
-		})
+		.then(updatedRecipe => { // no puedo ver si en la response a .update me devuelve en algun lado la receta modificada?
+			res.send(updatedRecipe) // de lo contrario, tendria que hacer una call a createRecipe() que me busca la receta que acabo de modificar y me la devuelve, y a eso hacer res.send
+		})												// o simplemente devolver lo que recibi por req.body
 		.catch(err => next(err))
 }
 
 async function deleteRecipe(req, res, next) {
-	const name = req.params.name;
+	const {id} = req.params;
 	try {
 		let existsInDB = await Recipe.findOne({
 			where: {
-				name,
+				id,
 			}
 		});
 		if (existsInDB) {
 			Recipe.destroy({
 				where: {
-					name,
+					id,
 				}
 			});
-			return res.status(200).send('Recipe has been deleted from database successfully')
-		}
+			return res.status(200).send('Recipe has been deleted from database successfully') // lo mismo que updateRecipe, ver si me devuelve en algun lado la receta borrada, 
+		}																																										// sino invocar createRecipe() o devolver el id
 		else throw new Error('ERROR 500: Recipe with given name does not exist in database')
 	} catch (err) {
 		next(err)
@@ -142,6 +142,6 @@ module.exports = {
 	getAllRecipes,
 	getRecipeById,
 	createRecipe,
-	editRecipe,
+	updateRecipe,
 	deleteRecipe
 }
