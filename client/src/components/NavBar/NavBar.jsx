@@ -12,9 +12,10 @@ import { NavLink } from 'react-router-dom';
 // Link a /home/edit
 export default function NavBar() {
 	return (
-		<div>
+		<div className='nav'>
 			<div>NavBar component</div>
 			<NavLink to='/home/create'>Create your own recipe!</NavLink>
+			<NavLink to='/'>Take me back</NavLink>
 		</div>
 	)
 };

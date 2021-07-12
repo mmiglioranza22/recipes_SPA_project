@@ -1,4 +1,4 @@
-import { GET_ALL, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } from "../constants";
+import { GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } from "../constants";
 
 // cada action tiene su archivo independiente, se importan todas desde index.js en actions
 // todos mis archivos index en cada carpeta van a ser un receptaculo donde todo es importado y exportado desde index 
@@ -7,14 +7,14 @@ import { GET_ALL, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } from "
 
 const initialState = {
 	recipesLoaded: [],
-	recipesCreated: [], //--not required-- //se guardan en la base de datos, si hago post y get, me va a salir en recipesLoaded las recetas creadas (si las busco por nombre)
+	recipesCreated: [], //--not required-- //Ya se guardan en la base de datos. Si hago post y get, me va a salir en recipesLoaded las recetas creadas (si las busco por nombre)
 	recipeDetail: {}
 };
 
 
 export default function rootReducer(state = initialState, action) {
 	switch(action.type){
-		case GET_ALL:
+		case GET_RECIPES:
 			return {...state, recipesLoaded: action.payload};
 		case POST_RECIPE: 
 			return {...state, recipesCreated: [...state.recipesCreated, action.payload]};

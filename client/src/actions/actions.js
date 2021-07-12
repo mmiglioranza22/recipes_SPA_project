@@ -1,11 +1,11 @@
 import axios from "axios";
-import { GET_ALL, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL } from "../constants";
+import { GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL } from "../constants";
 
 export function getRecipes(name) {
 	return function (dispatch) {
 		return axios.get(`${BASE_URL}/recipes?name=${name}`)
 			.then(json => {
-				dispatch({ type: GET_ALL, payload: json.data }); // que me devuelve si es error? o busqueda dio 0? ver back
+				dispatch({ type: GET_RECIPES, payload: json.data }); // que me devuelve si es error? o busqueda dio 0? ver back
 			}); //.catch(err => dispatch()) // sin nada, entonces devuelve el estado tal cual, no hace nada?, o dispatch(type: ERROR, payload: err)?
 	};
 };
