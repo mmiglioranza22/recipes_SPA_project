@@ -14,6 +14,10 @@ import { NavLink } from 'react-router-dom';
 
 //donde disparo la accion GET_DETAIL? tendria que ser un boton navlink 'detail' que se mapee en cada recipecard. Ver hw weather
 
+
+// consume store recipeDetail y 
+//ver si useEffect va aca
+
 export default function RecipeDetail() {
 	return (
 		<div className='detail'>

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { postRecipe } from '../../actions/actions';
 import { useDispatch } from 'react-redux';
+import { MIN_LENGTH } from '../../constants';
+
+
 
 // Ruta de creación de recetas: debe contener
 
@@ -28,7 +31,7 @@ export function validate(input) {
 	}
 	if (!input.summary) {
 		errors.summary = 'Please tell us about your recipe';
-	} else if (input.summary.length <= 19) {
+	} else if (input.summary.length < MIN_LENGTH) {
 		errors.summary = 'Enter at least 20 characters';
 	}
 	return errors;
@@ -49,42 +52,37 @@ export default function CreateForm() {
 		dietTypes: []
 	});
 
-	const handleInputChange = (e) => {
+	const handleInputChange = (e) => {									// ver porque actualiza tarde, hw forms/video franco
 		setInput(prev => {
 			if (e.target.name === 'dietTypes') {
-				if (!input.dietTypes.includes(e.target.value)) {
-					return ({ ...prev, dietTypes: input.dietTypes.push(e.target.value) }); // si quiere string, parseInt(e.target.value)
+				if (e.target.checked) {
+					return ({ ...prev, dietTypes: [...prev.dietTypes, parseInt(e.target.value)] });
 				} else {
-					return ({ ...prev, dietTypes: input.dietTypes.filter(d => d !== e.target.value) });
-				}
+					return ({ ...prev, dietTypes: prev.dietTypes.filter(d => d !== parseInt(e.target.value)) })
+				};
 			} else {
-				return ({ ...prev, [e.target.name]: e.target.value }) 
-			}																								
+				return ({ ...prev, [e.target.name]: e.target.value })
+			};
 		});
-		
+
 		if (e.target.name === 'name' || e.target.name === 'summary') { // no entra si no son campos que tiene que verificar
 			let objError = validate({ ...input, [e.target.name]: e.target.value })
 			setErrors(objError);
-		}
-	}
+		};
+	};
+	console.log(input)
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (errors.name === undefined && errors.summary === undefined) {
-			dispatch(postRecipe(input)) // ver esto bien, useDispatch para dispatch e importar actions
+		if (errors.name === undefined && errors.summary === undefined && input.name.length > 0 && input.summary.length >= MIN_LENGTH ) {
+			dispatch(postRecipe(input)) // ver esto bien, useDispatch para dispatch e importar actions es necesario aca?
 			alert('Your recipe has been created!')
 		} else {
 			alert('Please check if all mandatory fields are correct or have been completed')
 		}
 	}
 
-
-
 	let diets = ['Gluten Free', 'Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Whole30'];
-
-	//function para ir pusheando en un array todos los dietTypes, y finalmente setearlo al input.dietTypes
-
-	// map para los checkboxes, hacer array con nombres, value= index+1
 
 	return (
 		<div>
@@ -94,13 +92,13 @@ export default function CreateForm() {
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='name' >Recipe's Name:</label>
 				<span>*</span><input className={errors.name && 'danger'}
-					type='text' name='name' value={input.name} onChange={handleInputChange} /> {/*value vincula lo que escribo con el input y lo agrega al estado user */}
+					type='text' name='name' value={input.name} onChange={handleInputChange} /> 
 				<br />
 				<p className="danger">{errors.name}</p>
 
 				<label htmlFor='summary'>Brief summary:</label>
 				<span>*</span><textarea className={errors.summary && 'danger'}
-					type='text' name='summary' value={input.summary} onChange={handleInputChange} /> 
+					type='text' name='summary' value={input.summary} onChange={handleInputChange} />
 				<br />
 				<p className="danger">{errors.summary}</p>
 
@@ -113,29 +111,14 @@ export default function CreateForm() {
 				<label htmlFor='instructions'>Step-by-step instructions:</label>
 				<textarea type='text' name='instructions' value={input.instructions} onChange={handleInputChange} />
 				<br />
-				<label htmlFor='dietTypes'>Which type of diet it belongs to?:</label>
-				{diets.map((diet, i) => <div key={`diet`}><span>{diet}</span><input type='checkbox' name='dietTypes' value={i + 1} onChange={handleInputChange} /></div>)}
+				<label>Which type of diet it belongs to?:</label>
+				{diets.map((diet, i) => <div key={`${diet}`}><span>{diet}</span><input type='checkbox' name='dietTypes' value={i + 1} onChange={handleInputChange} /></div>)}
 
 				<br />
 
-				<input type='button' value='Submit' />
 
+				<input type='submit' value='Submit' />
 			</form>
 		</div>
 	)
 };
-
-
-
-
-	//let diets = ['gluten', 'keto', 'vege', 'lacto', 'ovo', 'vegan', 'pesce', 'paleo', 'primal', 'whole']
-	// <span></span><input type='checkbox' name='dietTypes-gluten' value={1} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-keto' value={2} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-vege' value={3} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-lacto' value={4} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-ovo' value={5} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-vegan' value={6} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-pesce' value={7} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-paleo' value={8} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-primal' value={9} onChange={handleInputChange} />
-	// 			<span></span><input type='checkbox' name='dietTypes-whole' value={10} onChange={handleInputChange} />
