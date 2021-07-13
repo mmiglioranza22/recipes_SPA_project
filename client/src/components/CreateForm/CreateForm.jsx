@@ -5,22 +5,16 @@ import { useDispatch } from 'react-redux';
 import { MIN_LENGTH } from '../../constants';
 
 
-
 // Ruta de creación de recetas: debe contener
 
-//  Un formulario controlado con los siguientes campos
-// Nombre
-// Resumen del plato
-// Puntuación
-// Nivel de "comida saludable"
-// Paso a paso
-//  Posibilidad de seleccionar/agregar uno o más tipos de dietas
-//  Botón/Opción para crear una nueva receta
-
-
-// dispara action POST_RECIPE
-
-//tiene un state interno, el cual se actualiza y manda la despacha la action?
+//  Un formulario controlado con los siguientes campos // OK
+// Nombre		// OK
+// Resumen del plato // OK
+// Puntuación	// OK
+// Nivel de "comida saludable"		// OK
+// Paso a paso		// OK
+//  Posibilidad de seleccionar/agregar uno o más tipos de dietas	// OK
+//  Botón/Opción para crear una nueva receta // OK
 
 export function validate(input) {
 	let errors = {};
@@ -36,7 +30,6 @@ export function validate(input) {
 	}
 	return errors;
 };
-
 
 export default function CreateForm() {
 
@@ -65,18 +58,18 @@ export default function CreateForm() {
 			};
 		});
 
-		if (e.target.name === 'name' || e.target.name === 'summary') { 
+		if (e.target.name === 'name' || e.target.name === 'summary') {
 			let objError = validate({ ...input, [e.target.name]: e.target.value })
 			setErrors(objError);
 		};
 	};
-	console.log(input)
+
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (errors.name === undefined && errors.summary === undefined && input.name.length > 0 && input.summary.length >= MIN_LENGTH ) {
-			dispatch(postRecipe(input)) // ver esto bien, useDispatch para dispatch e importar actions es necesario aca?
-			alert('Your recipe has been created!')
+		if (errors.name === undefined && errors.summary === undefined && input.name.length > 0 && input.summary.length >= MIN_LENGTH) {
+			dispatch(postRecipe(input)) /
+				alert('Your recipe has been created!')
 		} else {
 			alert('Please check if all mandatory fields are correct or have been completed')
 		}
@@ -92,7 +85,7 @@ export default function CreateForm() {
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='name' >Recipe's Name:</label>
 				<span>*</span><input className={errors.name && 'danger'}
-					type='text' name='name' value={input.name} onChange={handleInputChange} /> 
+					type='text' name='name' value={input.name} onChange={handleInputChange} />
 				<br />
 				<p className="danger">{errors.name}</p>
 				<label htmlFor='summary'>Brief summary:</label>
@@ -112,7 +105,7 @@ export default function CreateForm() {
 				<label>Which type of diet it belongs to?:</label>
 				{diets.map((diet, i) => <div key={`${diet}`}><span>{diet}</span><input type='checkbox' name='dietTypes' value={i + 1} onChange={handleInputChange} /></div>)}
 				<br />
-				<input type='submit' value='Submit' />
+				<input type='submit' value='Submit!' />
 			</form>
 		</div>
 	)
