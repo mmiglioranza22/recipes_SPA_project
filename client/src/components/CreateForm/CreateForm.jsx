@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { postRecipe } from '../../actions/actions';
 import { useDispatch } from 'react-redux';
 import { MIN_LENGTH } from '../../constants';
@@ -20,7 +19,7 @@ export function validate(input) {
 	let errors = {};
 	if (!input.name) {
 		errors.name = 'Please enter a name for your recipe.';
-	} else if (!/^[\w\-\s]+$/.test(input.rname)) {
+	} else if (!/^[\w\-\s]+$/.test(input.name)) {
 		errors.name = 'Only alphanumeric characters are allowed.';
 	}
 	if (!input.summary) {
@@ -32,10 +31,8 @@ export function validate(input) {
 };
 
 export default function CreateForm() {
-
 	const dispatch = useDispatch();
 	const [errors, setErrors] = React.useState({});
-
 	const [input, setInput] = useState({
 		name: "",
 		summary: "",
@@ -64,7 +61,6 @@ export default function CreateForm() {
 		};
 	};
 
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (errors.name === undefined && errors.summary === undefined && input.name.length > 0 && input.summary.length >= MIN_LENGTH) {
@@ -81,7 +77,6 @@ export default function CreateForm() {
 		<div>
 			<div>Tell us about your recipe!</div>
 			<div>(Fields with * are mandatory)</div>
-			<NavLink to='/home'>Home</NavLink>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='name' >Recipe's Name:</label>
 				<span>*</span><input className={errors.name && 'danger'}
