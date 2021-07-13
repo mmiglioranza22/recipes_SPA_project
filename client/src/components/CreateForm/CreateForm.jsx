@@ -52,7 +52,7 @@ export default function CreateForm() {
 		dietTypes: []
 	});
 
-	const handleInputChange = (e) => {									// ver porque actualiza tarde, hw forms/video franco
+	const handleInputChange = (e) => {
 		setInput(prev => {
 			if (e.target.name === 'dietTypes') {
 				if (e.target.checked) {
@@ -65,7 +65,7 @@ export default function CreateForm() {
 			};
 		});
 
-		if (e.target.name === 'name' || e.target.name === 'summary') { // no entra si no son campos que tiene que verificar
+		if (e.target.name === 'name' || e.target.name === 'summary') { 
 			let objError = validate({ ...input, [e.target.name]: e.target.value })
 			setErrors(objError);
 		};
@@ -95,13 +95,11 @@ export default function CreateForm() {
 					type='text' name='name' value={input.name} onChange={handleInputChange} /> 
 				<br />
 				<p className="danger">{errors.name}</p>
-
 				<label htmlFor='summary'>Brief summary:</label>
 				<span>*</span><textarea className={errors.summary && 'danger'}
 					type='text' name='summary' value={input.summary} onChange={handleInputChange} />
 				<br />
 				<p className="danger">{errors.summary}</p>
-
 				<label htmlFor='score'>Score:</label>
 				<input type='number' max='100' min='0' name='score' value={input.score} onChange={handleInputChange} />
 				<br />
@@ -113,10 +111,7 @@ export default function CreateForm() {
 				<br />
 				<label>Which type of diet it belongs to?:</label>
 				{diets.map((diet, i) => <div key={`${diet}`}><span>{diet}</span><input type='checkbox' name='dietTypes' value={i + 1} onChange={handleInputChange} /></div>)}
-
 				<br />
-
-
 				<input type='submit' value='Submit' />
 			</form>
 		</div>
