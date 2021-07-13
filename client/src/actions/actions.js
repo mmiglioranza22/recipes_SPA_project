@@ -23,7 +23,7 @@ export function postRecipe(recipe) {
 	return function (dispatch) {
 		return axios.post(`${BASE_URL}/recipe`, recipe)
 			.then(json => {
-				dispatch({type: POST_RECIPE, payload: json.data}) // la respuesta que me da el back, una vez que se creo la receta 
+				dispatch({type: POST_RECIPE, payload: json.data}) // la respuesta que me da el back, una vez que se creo la receta (los dietTypes aparecen en json.data.diets[i].name) 
 			});	
 	};
 };
