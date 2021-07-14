@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <Route exact path='/' component={LandingPage} />
-      <Route path='/home' component={Home} />
+      <Route exact path='/home' component={Home} />
       <Route path='/home' component={NavBar} />
       <Route path='/home' component={SearchBar} />
       <Route exact path='/home/detail/:id' component={RecipeDetail} /> 

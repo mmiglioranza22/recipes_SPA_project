@@ -22,6 +22,7 @@ import RecipeCards from '../RecipeCards/RecipeCards';
 
 
 
+// ver los errores aca, como renderizar
 
 export default function Home() {
 	const recipesLoaded = useSelector(state => state.recipesLoaded)

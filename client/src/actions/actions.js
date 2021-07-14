@@ -5,8 +5,8 @@ export function getRecipes(name) {
 	return function (dispatch) {
 		return axios.get(`${BASE_URL}/recipes?name=${name}`)
 			.then(json => {
-				dispatch({ type: GET_RECIPES, payload: json.data }); // que me devuelve si es error? o busqueda dio 0? ver back
-			}); //.catch(err => dispatch()) // sin nada, entonces devuelve el estado tal cual, no hace nada?, o dispatch(type: ERROR, payload: err)?
+				dispatch({ type: GET_RECIPES, payload: json.data }); // no catcheo nada, los errores ya los maneje en el back, aca recibe o bien .data o error(ir al error endware y manejarlo ahi)
+			}); 
 	};
 };
 
@@ -14,8 +14,8 @@ export function getRecipeDetail(id) {
 	return function (dispatch) {
 		return axios.get(`${BASE_URL}/recipes/${id}`)
 			.then(json => {
-				dispatch({ type: GET_DETAIL, payload: json.data }); // que me devuelve si es error? o busqueda dio 0? ver back
-			}); //.catch??
+				dispatch({ type: GET_DETAIL, payload: json.data }); // no catcheo nada, los errores ya los maneje en el back, aca recibe o bien .data o error(ir al error endware y manejarlo ahi)
+			});
 	};
 };
 
@@ -28,6 +28,10 @@ export function postRecipe(recipe) {
 	};
 };
 
+
+export function resetDetail() {
+	return {type: 'RESET'}
+}
 
 //--not required --
 

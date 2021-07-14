@@ -51,7 +51,7 @@ async function getRecipeById(req, res, next) {
 				where: {
 					id: idReceta
 				},
-				attributes: ['id', ['name', 'title'], 'summary', 'score', 'healthScore', 'instructions', 'dietTypes'],
+				attributes: ['id', ['name', 'title'], 'summary', ['score', 'spoonacularScore'], 'healthScore', 'instructions', 'dietTypes'],
 				include: {
 					model: Diet,
 					attributes: ['name']
