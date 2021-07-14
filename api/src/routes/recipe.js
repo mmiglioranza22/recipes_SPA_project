@@ -35,8 +35,8 @@ router.post('/recipe', createRecipe);
 
 //--not required--
 
-router.put('/recipes/:id', updateRecipe)
+router.put('/recipes/:id', updateRecipe);
 
-router.delete('/recipes/:id', deleteRecipe)
+router.delete('/recipes/:id', deleteRecipe);
 
 module.exports = router;

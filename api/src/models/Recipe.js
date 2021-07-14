@@ -33,5 +33,4 @@ module.exports = (sequelize) => {
       type: DataTypes.ARRAY(DataTypes.TEXT),
     }
   });
-  
 };

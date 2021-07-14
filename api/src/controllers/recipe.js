@@ -7,7 +7,7 @@ async function getAllRecipes(req, res, next) {
 	let { name } = req.query;
 	if (req.query.name) {
 		try {
-			let recipesDB = await Recipe.findAll({ // no puedo usar sin await y con promise all porque me conctatena la promesa no resuelta, y para que usar promise all con un unico elemento
+			let recipesDB = await Recipe.findAll({
 				where: {
 					name: {
 						[Op.iLike]: `%${name}%`
@@ -17,17 +17,16 @@ async function getAllRecipes(req, res, next) {
 			});
 			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_4}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
-				throw new Error (`Your search has ${promiseApi.data.results.length} results`); // aca lo manda al catch, tiene mas sentido
-				//return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
+				throw new Error ('ERROR 500: Your search has 0 results');
 			}
 			let apiResponse = [];
-			promiseApi.data.results.forEach(recipe => { // entiendo que no puedo usar promise all abajo, porque tengo que filtrar la informacion de la api antes de devolverla
+			promiseApi.data.results.forEach(recipe => {
 				let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes } = recipe;
 				let result = { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes };
 				apiResponse.push(result);
 			});
 			res.json(recipesDB.concat(apiResponse));
-		} catch (err) { // ver cuando rompe y entra aca, que casos, para ver que mando al front
+		} catch (err) {
 			next(err);
 		}
 	}
@@ -40,7 +39,7 @@ async function getRecipeById(req, res, next) {
 		try {
 			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_4}`);
 			let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = promiseApi.data; // es spoonacularScore y NO aggregateLikes
-			let result = 	{ id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } // sino, aca score : aggregateLikes 
+			let result = 	{ id, image, title, dietTypes: diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } // sino, aca score : aggregateLikes 
 			return res.json(result)
 		} catch (err) {
 			return next(err)
@@ -52,7 +51,11 @@ async function getRecipeById(req, res, next) {
 				where: {
 					id: idReceta
 				},
-				attributes: ['id', ['name', 'title'], 'summary', 'score', 'healthScore', 'instructions', ['dietTypes', 'diets']],
+				attributes: ['id', ['name', 'title'], 'summary', 'score', 'healthScore', 'instructions', 'dietTypes'],
+				include: {
+					model: Diet,
+					attributes: ['name']
+				}
 			});
 			if (result) res.json(result)
 			else throw new Error('ERROR 500: Recipe not found in database (UUID does not exist).');
@@ -72,11 +75,7 @@ async function getRecipeById(req, res, next) {
 async function createRecipe(req, res, next) {
 	try {
 		let { name, summary, score, healthScore, instructions, dietTypes } = req.body;
-		// let dietTypeId = await Diet.findAll({
-
-		// })
-
-		let [recipe, created] = await Recipe.findOrCreate({
+			let [recipe, created] = await Recipe.findOrCreate({
 			where: {
 				name,
 				summary,
@@ -107,7 +106,7 @@ function updateRecipe(req, res, next) {
 			res.send(updatedRecipe) // de lo contrario, tendria que hacer una call a createRecipe() que me busca la receta que acabo de modificar y me la devuelve, y a eso hacer res.send
 		})												// o simplemente devolver lo que recibi por req.body
 		.catch(err => next(err))
-}
+};
 
 async function deleteRecipe(req, res, next) {
 	const {id} = req.params;
@@ -129,7 +128,7 @@ async function deleteRecipe(req, res, next) {
 	} catch (err) {
 		next(err)
 	}
-}
+};
 
 module.exports = {
 	getAllRecipes,
@@ -137,4 +136,4 @@ module.exports = {
 	createRecipe,
 	updateRecipe,
 	deleteRecipe
-}
+};

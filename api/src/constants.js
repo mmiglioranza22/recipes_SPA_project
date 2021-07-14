@@ -12,4 +12,4 @@ module.exports = {
 	API_KEY_3,
 	API_KEY_4,
 	API_KEY_5
-}
+};
