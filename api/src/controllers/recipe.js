@@ -13,15 +13,12 @@ async function getAllRecipes(req, res, next) {
 						[Op.iLike]: `%${name}%`
 					}
 				},
-				attributes: ['name', 'summary', 'score', 'healthScore', 'instructions'],
-				include: {
-					model: Diet,
-					attributes: ['name']
-				}
+				attributes: ['id', ['name', 'title'], 'summary', 'score', 'healthScore', 'instructions', ['dietTypes', 'diets']],
 			});
-			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_3}&${URL_FLAGS}`)
+			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_4}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
-				return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
+				throw new Error (`Your search has ${promiseApi.data.results.length} results`); // aca lo manda al catch, tiene mas sentido
+				//return res.status(404).send(`Your search has ${promiseApi.data.results.length} results`);
 			}
 			let apiResponse = [];
 			promiseApi.data.results.forEach(recipe => { // entiendo que no puedo usar promise all abajo, porque tengo que filtrar la informacion de la api antes de devolverla
@@ -41,7 +38,7 @@ async function getRecipeById(req, res, next) {
 	if (/^[^A-Za-z]+$/i.test(idReceta)) {
 		let promiseApi;
 		try {
-			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_3}`);
+			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_4}`);
 			let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = promiseApi.data; // es spoonacularScore y NO aggregateLikes
 			let result = 	{ id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } // sino, aca score : aggregateLikes 
 			return res.json(result)
@@ -55,15 +52,7 @@ async function getRecipeById(req, res, next) {
 				where: {
 					id: idReceta
 				},
-				attributes: {
-					exclude: ['id', 'createdAt', 'updatedAt', 'dietTypes']
-				},
-				include: {
-					model: Diet,
-					attributes: {
-						exclude: ['id', 'createdAt', 'updatedAt']
-					},
-				}
+				attributes: ['id', ['name', 'title'], 'summary', 'score', 'healthScore', 'instructions', ['dietTypes', 'diets']],
 			});
 			if (result) res.json(result)
 			else throw new Error('ERROR 500: Recipe not found in database (UUID does not exist).');
@@ -83,6 +72,10 @@ async function getRecipeById(req, res, next) {
 async function createRecipe(req, res, next) {
 	try {
 		let { name, summary, score, healthScore, instructions, dietTypes } = req.body;
+		// let dietTypeId = await Diet.findAll({
+
+		// })
+
 		let [recipe, created] = await Recipe.findOrCreate({
 			where: {
 				name,

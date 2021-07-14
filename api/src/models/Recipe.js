@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
     },
     dietTypes: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      type: DataTypes.ARRAY(DataTypes.TEXT),
     }
   });
   

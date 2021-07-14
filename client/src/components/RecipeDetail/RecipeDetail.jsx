@@ -18,11 +18,13 @@ import { NavLink } from 'react-router-dom';
 // consume store recipeDetail y 
 //ver si useEffect va aca
 
+//COMO HAGO PARA ACCEDER AL ID DE LA RECETA!? HW WEATHER / MOVIES
+
 export default function RecipeDetail() {
 	return (
 		<div className='detail'>
 			<div>Recipe Details will be shown here</div>
-			<NavLink to='/home'>Home</NavLink>
+			
 		</div>
 	)
 };

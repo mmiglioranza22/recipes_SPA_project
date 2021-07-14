@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { postRecipe } from '../../actions/actions';
 import { useDispatch } from 'react-redux';
 import { MIN_LENGTH } from '../../constants';
+//import { Redirect } from 'react-router';
 
 
 // Ruta de creación de recetas: debe contener
@@ -21,12 +22,12 @@ export function validate(input) {
 		errors.name = 'Please enter a name for your recipe.';
 	} else if (!/^[\w\-\s]+$/.test(input.name)) {
 		errors.name = 'Only alphanumeric characters are allowed.';
-	}
+	};
 	if (!input.summary) {
 		errors.summary = 'Please tell us about your recipe';
 	} else if (input.summary.length < MIN_LENGTH) {
 		errors.summary = 'Enter at least 20 characters';
-	}
+	};
 	return errors;
 };
 
@@ -41,37 +42,34 @@ export default function CreateForm() {
 		instructions: "",
 		dietTypes: []
 	});
+	const diets = ['Gluten Free', 'Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Whole30'];
 
 	const handleInputChange = (e) => {
 		setInput(prev => {
 			if (e.target.name === 'dietTypes') {
 				if (e.target.checked) {
-					return ({ ...prev, dietTypes: [...prev.dietTypes, parseInt(e.target.value)] });
+					return ({ ...prev, dietTypes: [...prev.dietTypes, e.target.value] });
 				} else {
-					return ({ ...prev, dietTypes: prev.dietTypes.filter(d => d !== parseInt(e.target.value)) })
+					return ({ ...prev, dietTypes: prev.dietTypes.filter(d => d !== e.target.value) })
 				};
 			} else {
 				return ({ ...prev, [e.target.name]: e.target.value })
 			};
 		});
-
 		if (e.target.name === 'name' || e.target.name === 'summary') {
 			let objError = validate({ ...input, [e.target.name]: e.target.value })
 			setErrors(objError);
 		};
 	};
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (errors.name === undefined && errors.summary === undefined && input.name.length > 0 && input.summary.length >= MIN_LENGTH) {
-			dispatch(postRecipe(input)) /
-				alert('Your recipe has been created!')
+			dispatch(postRecipe(input));
+			alert('Your recipe has been created!');
 		} else {
-			alert('Please check if all mandatory fields are correct or have been completed')
-		}
-	}
-
-	let diets = ['Gluten Free', 'Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Whole30'];
+			alert('Please check if all mandatory fields are correct or have been completed');
+		};
+	};
 
 	return (
 		<div>
@@ -91,14 +89,14 @@ export default function CreateForm() {
 				<label htmlFor='score'>Score:</label>
 				<input type='number' max='100' min='0' name='score' value={input.score} onChange={handleInputChange} />
 				<br />
-				<label htmlFor='healthScore'>HealthScore:</label>
+				<label htmlFor='healthScore'>Health score:</label>
 				<input type='number' max='100' min='0' name='healthScore' value={input.healthScore} onChange={handleInputChange} />
 				<br />
 				<label htmlFor='instructions'>Step-by-step instructions:</label>
 				<textarea type='text' name='instructions' value={input.instructions} onChange={handleInputChange} />
 				<br />
 				<label>Which type of diet it belongs to?:</label>
-				{diets.map((diet, i) => <div key={`${diet}`}><span>{diet}</span><input type='checkbox' name='dietTypes' value={i + 1} onChange={handleInputChange} /></div>)}
+				{diets.map((diet) => <div key={diet}><span>{diet}</span><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}
 				<br />
 				<input type='submit' value='Submit!' />
 			</form>
