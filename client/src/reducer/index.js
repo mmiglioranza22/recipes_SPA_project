@@ -1,10 +1,12 @@
-import { TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } from "../constants";
+import { GET_DIETS, TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } from "../constants";
 
 const initialState = {
 	recipesLoaded: [],
 	recipesCreated: [], //--not required-- //Ya se guardan en la base de datos. Si hago post y get, me va a salir en recipesLoaded las recetas creadas (si las busco por nombre)
 	recipeDetail: {},
+	dietsDB: [],
 	loading: false
+	
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -15,6 +17,8 @@ export default function rootReducer(state = initialState, action) {
 			return {...state, recipesCreated: [...state.recipesCreated, action.payload]};
 		case GET_DETAIL:
 			return {...state, recipeDetail: action.payload, loading: false};
+		case GET_DIETS: 
+			return {...state, dietsDB: action.payload}
 		case TOGGLE_LOADING:
 			return {...state, loading: true}
 		// -- a chequear ultimos dos casos, cuando este el PI ya terminado, NO ANTES!!!
@@ -29,5 +33,5 @@ export default function rootReducer(state = initialState, action) {
 			// NO, por lo mismo de arriba. solo en recipesCreated esta bien
 		default:
 			return state
-	}
-}
+	};
+};

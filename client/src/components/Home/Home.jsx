@@ -32,7 +32,7 @@ export default function Home() {
 		type: '',
 		loading: false
 	});
-console.log(recipesLoaded)
+
 	const handleChange = (e) => {
 		setOrder(prev => ({...prev, type: e.target.value, loading: true}));
 		//dispatch(toggleLoading())

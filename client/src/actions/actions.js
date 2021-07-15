@@ -1,9 +1,18 @@
 import axios from "axios";
-import { TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL } from "../constants";
+import { TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL, GET_DIETS } from "../constants";
 
 
 export function toggleLoading(){
 	return { type: TOGGLE_LOADING };
+};
+
+export function getDiets() {
+	return function(dispatch) {
+		return axios.get(`${BASE_URL}/types`)
+			.then(json => {
+				dispatch({type: GET_DIETS, payload: json.data})
+			})
+	};
 };
 
 export function getRecipes(name) {

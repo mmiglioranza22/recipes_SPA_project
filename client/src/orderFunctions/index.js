@@ -1,24 +1,12 @@
 export function orderAZ(array) {
 	array = array.sort((a, b) => {
-		if (a.title > b.title) {
-			return 1; // [a,b]
-		};
-		if (a.title < b.title) {
-			return -1; // [b,a]
-		};
-		return 0;
+			return a.title.localeCompare(b.title); // [a,b], negative value
 	});
 	return array
 }
 export function orderZA(array) {
 	array = array.sort((a, b) => {
-		if (a.title > b.title) {
-			return -1;
-		};
-		if (a.title < b.title) {
-			return 1;
-		};
-		return 0;
+			return (a.title.localeCompare(b.title)) * -1; // reverse()
 	});
 	return array;
 };

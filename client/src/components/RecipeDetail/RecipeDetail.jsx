@@ -48,7 +48,7 @@ export default function RecipeDetail() {
 			{healthScore ? <span>{healthScore}</span> : <span>Not scored (Or not healthy at all!)</span>}
 			<div>Dish type:</div>
 			<div>This recipe can be prepared for: </div>
-			{dishTypes ? dishTypes.map(type => <div>{type}</div>) : <div> all dishes and meals!</div>}
+			{dishTypes ? dishTypes.map(type => <div key={type}><div>{type}</div></div>) : <div> all dishes and meals!</div>}
 		</div>
 		}
 		</div>	

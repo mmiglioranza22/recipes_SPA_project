@@ -4,6 +4,7 @@ export const POST_RECIPE = 'POST_RECIPE';
 export const UPDATE_RECIPE = 'UPDATE_RECIPE';
 export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
+export const GET_DIETS = 'GET_DIETS';
 
 export const BASE_URL = 'http://localhost:3002'
 export const MIN_LENGTH = 20;

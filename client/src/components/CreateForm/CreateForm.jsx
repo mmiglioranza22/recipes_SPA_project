@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { postRecipe } from '../../actions/actions';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { getDiets, postRecipe } from '../../actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 import { MIN_LENGTH } from '../../constants';
 //import { Redirect } from 'react-router';
 
@@ -33,6 +33,12 @@ export function validate(input) {
 
 export default function CreateForm() {
 	const dispatch = useDispatch();
+	const dietsDB = useSelector(state => state.dietsDB);
+
+	useEffect(() => {
+		dispatch(getDiets());
+	}, []); 
+
 	const [errors, setErrors] = useState({});
 	const [input, setInput] = useState({
 		name: "",
@@ -42,7 +48,6 @@ export default function CreateForm() {
 		instructions: "",
 		dietTypes: []
 	});
-	const diets = ['Gluten Free', 'Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Whole30'];
 
 	const handleInputChange = (e) => {
 		setInput(prev => {
@@ -96,7 +101,7 @@ export default function CreateForm() {
 				<textarea type='text' name='instructions' placeholder='Type here...' value={input.instructions} onChange={handleInputChange} />
 				<br />
 				<label>Which type of diet it belongs to?:</label>
-				{diets.map((diet) => <div key={diet}><span>{diet}</span><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}
+				{dietsDB.map((diet) => <div key={diet}><span>{diet}</span><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}
 				<br />
 				<input type='submit' value='Submit!' />
 			</form>
