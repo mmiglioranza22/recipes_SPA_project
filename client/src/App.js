@@ -19,7 +19,7 @@ function App() {
       <Route exact path='/' component={LandingPage} />
       <Route exact path='/home' component={Home} />
       <Route path='/home' component={NavBar} />
-      <Route path='/home' component={SearchBar} />
+      <Route exact path='/home' component={SearchBar} />
       <Route exact path='/home/detail/:id' component={RecipeDetail} /> 
       <Route exact path='/home/create' component={CreateForm} />
     </div>

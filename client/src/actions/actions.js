@@ -29,10 +29,6 @@ export function postRecipe(recipe) {
 };
 
 
-export function resetDetail() {
-	return {type: 'RESET'}
-}
-
 //--not required --
 
 

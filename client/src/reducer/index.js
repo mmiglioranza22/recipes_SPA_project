@@ -14,8 +14,6 @@ export default function rootReducer(state = initialState, action) {
 			return {...state, recipesCreated: [...state.recipesCreated, action.payload]};
 		case GET_DETAIL:
 			return {...state, recipeDetail: action.payload};
-		case 'RESET':
-			return {...state, recipeDetail: {}}
 		
 		// -- a chequear ultimos dos casos, cuando este el PI ya terminado, NO ANTES!!!
 		case UPDATE_RECIPE:

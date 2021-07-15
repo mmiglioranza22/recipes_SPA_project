@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 export default function RecipeDetail() {
 
 	const recipeDetail = useSelector(state => state.recipeDetail);
+	
 	// const [recipe, setRecipe] = useState(recipeDetail);
 	
 	// useEffect(()=> {
@@ -25,7 +26,7 @@ export default function RecipeDetail() {
 
 	return (
 		<div>
-			{  !recipeDetail ? <div>Loading</div> : 
+			{  recipeDetail ?  
 		<div className='detail'>
 			<div>
 				<img src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU'} />
@@ -51,7 +52,7 @@ export default function RecipeDetail() {
 			<div>This recipe can be prepared for: </div>
 			{Array.isArray(dishTypes) ? dishTypes.map(type => <div>{type}</div>) : <div> all dishes!</div>}
 		</div>
-		}
+		: <div>Loading</div> }
 		</div>	
 	)
 };
