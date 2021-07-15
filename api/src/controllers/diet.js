@@ -5,7 +5,8 @@ async function getDiets(req, res, next) {
 		let diets = await Diet.findAll({
 			attributes: ['id', 'name']
 		});
-		res.json(diets);
+		let dietTypes = diets.map( d => d.name)
+		res.json(dietTypes);
 	} catch (err) {
 		next(err);
 	};
