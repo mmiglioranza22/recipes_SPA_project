@@ -33,7 +33,7 @@ export function validate(input) {
 
 export default function CreateForm() {
 	const dispatch = useDispatch();
-	const [errors, setErrors] = React.useState({});
+	const [errors, setErrors] = useState({});
 	const [input, setInput] = useState({
 		name: "",
 		summary: "",
@@ -78,12 +78,12 @@ export default function CreateForm() {
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='name' >Recipe's Name:</label>
 				<span>*</span><input className={errors.name && 'danger'}
-					type='text' name='name' value={input.name} onChange={handleInputChange} />
+					type='text' name='name' autoComplete='off' placeholder='Type here...' value={input.name} onChange={handleInputChange} />
 				<br />
 				<p className="danger">{errors.name}</p>
 				<label htmlFor='summary'>Brief summary:</label>
 				<span>*</span><textarea className={errors.summary && 'danger'}
-					type='text' name='summary' value={input.summary} onChange={handleInputChange} />
+					type='text' name='summary' placeholder='Type here...' value={input.summary} onChange={handleInputChange} />
 				<br />
 				<p className="danger">{errors.summary}</p>
 				<label htmlFor='score'>Score:</label>
@@ -93,7 +93,7 @@ export default function CreateForm() {
 				<input type='number' max='100' min='0' name='healthScore' value={input.healthScore} onChange={handleInputChange} />
 				<br />
 				<label htmlFor='instructions'>Step-by-step instructions:</label>
-				<textarea type='text' name='instructions' value={input.instructions} onChange={handleInputChange} />
+				<textarea type='text' name='instructions' placeholder='Type here...' value={input.instructions} onChange={handleInputChange} />
 				<br />
 				<label>Which type of diet it belongs to?:</label>
 				{diets.map((diet) => <div key={diet}><span>{diet}</span><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}

@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL } from "../constants";
+import { TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL } from "../constants";
+
+
+function toggleLoading(){
+	return { type: TOGGLE_LOADING };
+};
 
 export function getRecipes(name) {
 	return function (dispatch) {
@@ -12,6 +17,7 @@ export function getRecipes(name) {
 
 export function getRecipeDetail(id) {
 	return function (dispatch) {
+		dispatch(toggleLoading());
 		return axios.get(`${BASE_URL}/recipes/${id}`)
 			.then(json => {
 				dispatch({ type: GET_DETAIL, payload: json.data }); // no catcheo nada, los errores ya los maneje en el back, aca recibe o bien .data o error(ir al error endware y manejarlo ahi)
@@ -27,6 +33,7 @@ export function postRecipe(recipe) {
 			});	
 	};
 };
+
 
 
 //--not required --
