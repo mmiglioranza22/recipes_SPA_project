@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RecipeCards from '../RecipeCards/RecipeCards';
+//import { toggleLoading } from '../../actions/actions';
+import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
+// import { orderAz, orderZa, orderTopScore, orderLastScore } from '../../orderFunctions';
 
 //  Input de búsqueda para encontrar recetas por nombre
 //  Área donde se verá el listado de recetas. Deberá mostrar su:
@@ -11,8 +14,7 @@ import RecipeCards from '../RecipeCards/RecipeCards';
 //  Botones/Opciones para ordenar tanto ascendentemente como descendentemente las recetas por orden alfabético y por puntuación
 //  Paginado para ir buscando y mostrando las siguientes recetas
 
-// ACA se mapea, este es el CARDS, recipeCard es el CARD. VER hw weather
-// cuando search se ejecute, home consume la store y renderiza RecipeCards
+
 //entonces, es aca donde se hacen o se importan los componentes filtros (Home es cointainer, creo)
 // los componentes filtros: consumen la store (recipesLoaded) y devuelven un nuevo array que debe renderizarse (renderiza recipeCards)
 // el filtro seria un <select> con <options>, que al ser elegidos ejecutan una funcion concreta:
@@ -20,17 +22,47 @@ import RecipeCards from '../RecipeCards/RecipeCards';
 // 	- por recipeLoaded[i].score(mayor a menor) --> se genera un nuevo array, creo. El de la store no se muta!
 //  (otros si quiero:)
 
-
-
 // ver los errores aca, como renderizar
 
 export default function Home() {
-	const recipesLoaded = useSelector(state => state.recipesLoaded)
+	let recipesLoaded = useSelector(state => state.recipesLoaded)
+	const dispatch = useDispatch();
+	const loading = useSelector(state => state.loading);
+	const [order, setOrder] = useState({
+		type: '',
+		loading: false
+	});
+console.log(recipesLoaded)
+	const handleChange = (e) => {
+		setOrder(prev => ({...prev, type: e.target.value, loading: true}));
+		//dispatch(toggleLoading())
+	};
+
+	const handleSubmit = (e) => {
+		//llama al sort indicado
+		e.preventDefault();
+			if (order.type === 'AZ') orderAZ(recipesLoaded);
+			if (order.type === 'ZA') orderZA(recipesLoaded);
+			if (order.type === 'scorefirst') topScore(recipesLoaded);
+			if (order.type === 'scorelast') lastScore(recipesLoaded);
+	};
 
 	return (
 		<div className='home'>
 			<div>Home component, you are now in /home</div>
-      {recipesLoaded.length ? recipesLoaded.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>) : <div>No results</div> }
+			<form onSubmit={handleSubmit}>
+				<label htmlFor='orderby'>Order by:</label>
+				<select value={order.type} name='orderby' onChange={handleChange}>
+					<option value='AZ'>A-Z</option>
+					<option value='ZA'>Z-A</option>
+					<option value='scorefirst'>Top Score</option>
+					<option value='scorelast'>Last Score</option>
+				</select>
+				<input type='submit' value='Order' />
+
+			</form>
+			{loading ? <div>Results (if any) should appear below</div> :
+				recipesLoaded.length ? recipesLoaded.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>) : <div>No results</div>}
 		</div>
 	)
 };

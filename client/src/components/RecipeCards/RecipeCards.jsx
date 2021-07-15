@@ -2,13 +2,10 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getRecipeDetail } from '../../actions/actions';
-export default function RecipeCards({ recipeInfo }) {
 
-	// ver como le paso la id de este componente a RecipeDetail (desde este match.params.id directo? o tiene que viajar por props? o lo saco de la store? --->DISPATCH(GETRECIPEID(ID))!!
-	// store: RecipeDetail consume la store con useSelector, hace un recipesLoaded.filter(r=> r.id === match.params.id? algo asi))
-	// O TENGO QUE MANDAR EL ID DESDE APP POR Route render={...}, ver HW movies / weather
+export default function RecipeCards({ recipeInfo }) {
 	const dispatch = useDispatch();
-	let { id, image, title, diets, dairyFree, glutenFree, vegan, vegetarian, dishTypes } = recipeInfo; // dishTypes no se necesita aca, ver bien README, se sacaria de aca y de controller getAll para API
+	let { id, image, title, diets, dairyFree, glutenFree, vegan, vegetarian, dishTypes, score } = recipeInfo; // dishTypes no se necesita aca, ver bien README, se sacaria de aca y de controller getAll para API
 
 	const handleClick = () => {
 		dispatch(getRecipeDetail(id));
@@ -26,6 +23,7 @@ export default function RecipeCards({ recipeInfo }) {
 				{diets.includes('Gluten Free') || glutenFree ? <span>Gluten Free ✅</span> : <span>Gluten Free ❌</span>}
 				{diets.includes('Ovo-Vegetarian') || diets.includes('Paleo') || diets.includes('Vegan') || dairyFree ? <span>Dairy Free ✅</span> : <span>Dairy Free ❌</span>}
 			</div>
+			<div>Score: {score}</div>
 			<button onClick={handleClick}>
 				<Link to={`/home/detail/${id}`}>Show details</Link>
 			</button>

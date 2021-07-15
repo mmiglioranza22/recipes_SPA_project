@@ -10,7 +10,7 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
 	switch(action.type){
 		case GET_RECIPES:
-			return {...state, recipesLoaded: action.payload};
+			return {...state, recipesLoaded: action.payload, loading: false};
 		case POST_RECIPE: 
 			return {...state, recipesCreated: [...state.recipesCreated, action.payload]};
 		case GET_DETAIL:

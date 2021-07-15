@@ -2,12 +2,13 @@ import axios from "axios";
 import { TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL } from "../constants";
 
 
-function toggleLoading(){
+export function toggleLoading(){
 	return { type: TOGGLE_LOADING };
 };
 
 export function getRecipes(name) {
 	return function (dispatch) {
+		dispatch(toggleLoading());
 		return axios.get(`${BASE_URL}/recipes?name=${name}`)
 			.then(json => {
 				dispatch({ type: GET_RECIPES, payload: json.data }); // no catcheo nada, los errores ya los maneje en el back, aca recibe o bien .data o error(ir al error endware y manejarlo ahi)

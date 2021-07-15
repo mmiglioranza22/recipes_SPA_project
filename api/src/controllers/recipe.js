@@ -15,14 +15,14 @@ async function getAllRecipes(req, res, next) {
 				},
 				attributes: ['id', ['name', 'title'], 'summary', 'score', 'healthScore', 'instructions', ['dietTypes', 'diets']],
 			});
-			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_4}&${URL_FLAGS}`)
+			let promiseApi = await axios.get(`${BASE_URL}complexSearch?query=${name}&apiKey=${API_KEY_5}&${URL_FLAGS}`)
 			if (!promiseApi.data.results.length && !recipesDB.length) {
 				throw new Error ('ERROR 500: Your search has 0 results');
 			}
 			let apiResponse = [];
 			promiseApi.data.results.forEach(recipe => {
-				let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes } = recipe;
-				let result = { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes };
+				let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, spoonacularScore } = recipe;
+				let result = { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, score: spoonacularScore };
 				apiResponse.push(result);
 			});
 			res.json(recipesDB.concat(apiResponse));
@@ -37,7 +37,7 @@ async function getRecipeById(req, res, next) {
 	if (/^[^A-Za-z]+$/i.test(idReceta)) {
 		let promiseApi;
 		try {
-			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_4}`);
+			promiseApi = await axios.get(`${BASE_URL}${idReceta}/information?apiKey=${API_KEY_5}`);
 			let { id, image, title, diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = promiseApi.data; // es spoonacularScore y NO aggregateLikes
 			let result = 	{ id, image, title, dietTypes: diets, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } // sino, aca score : aggregateLikes 
 			return res.json(result)
