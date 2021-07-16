@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getDiets, postRecipe } from '../../actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { MIN_LENGTH } from '../../constants';
-//import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 
 // Ruta de creación de recetas: debe contener
@@ -37,7 +37,7 @@ export default function CreateForm() {
 
 	useEffect(() => {
 		dispatch(getDiets());
-	}, []); 
+	}, [dispatch]);
 
 	const [errors, setErrors] = useState({});
 	const [input, setInput] = useState({
@@ -48,6 +48,7 @@ export default function CreateForm() {
 		instructions: "",
 		dietTypes: []
 	});
+	const [done, setDone] = useState(false);
 
 	const handleInputChange = (e) => {
 		setInput(prev => {
@@ -70,41 +71,45 @@ export default function CreateForm() {
 		e.preventDefault();
 		if (errors.name === undefined && errors.summary === undefined && input.name.length > 0 && input.summary.length >= MIN_LENGTH) {
 			dispatch(postRecipe(input));
+			setDone(true);
 			alert('Your recipe has been created!');
 		} else {
 			alert('Please check if all mandatory fields are correct or have been completed');
 		};
 	};
-
 	return (
-		<div>
-			<div>Tell us about your recipe!</div>
-			<div>(Fields with * are mandatory)</div>
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='name' >Recipe's Name:</label>
-				<span>*</span><input className={errors.name && 'danger'}
-					type='text' name='name' autoComplete='off' placeholder='Type here...' value={input.name} onChange={handleInputChange} />
-				<br />
-				<p className="danger">{errors.name}</p>
-				<label htmlFor='summary'>Brief summary:</label>
-				<span>*</span><textarea className={errors.summary && 'danger'}
-					type='text' name='summary' placeholder='Type here...' value={input.summary} onChange={handleInputChange} />
-				<br />
-				<p className="danger">{errors.summary}</p>
-				<label htmlFor='score'>Score:</label>
-				<input type='number' max='100' min='0' name='score' value={input.score} onChange={handleInputChange} />
-				<br />
-				<label htmlFor='healthScore'>Health score:</label>
-				<input type='number' max='100' min='0' name='healthScore' value={input.healthScore} onChange={handleInputChange} />
-				<br />
-				<label htmlFor='instructions'>Step-by-step instructions:</label>
-				<textarea type='text' name='instructions' placeholder='Type here...' value={input.instructions} onChange={handleInputChange} />
-				<br />
-				<label>Which type of diet it belongs to?:</label>
-				{dietsDB.map((diet) => <div key={diet}><span>{diet}</span><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}
-				<br />
-				<input type='submit' value='Submit!' />
-			</form>
+		<div>{done ? <Redirect to='/home' />
+			:
+			<div>
+				<div>Tell us about your recipe!</div>
+				<div>(Fields with * are mandatory)</div>
+				<form onSubmit={handleSubmit}>
+					<label htmlFor='name' >Recipe's Name:</label>
+					<span>*</span><input className={errors.name && 'danger'}
+						type='text' name='name' autoComplete='off' placeholder='Type here...' value={input.name} onChange={handleInputChange} />
+					<br />
+					<p className="danger">{errors.name}</p>
+					<label htmlFor='summary'>Brief summary:</label>
+					<span>*</span><textarea className={errors.summary && 'danger'}
+						type='text' name='summary' placeholder='Type here...' value={input.summary} onChange={handleInputChange} />
+					<br />
+					<p className="danger">{errors.summary}</p>
+					<label htmlFor='score'>Score:</label>
+					<input type='number' max='100' min='0' name='score' value={input.score} onChange={handleInputChange} />
+					<br />
+					<label htmlFor='healthScore'>Health score:</label>
+					<input type='number' max='100' min='0' name='healthScore' value={input.healthScore} onChange={handleInputChange} />
+					<br />
+					<label htmlFor='instructions'>Step-by-step instructions:</label>
+					<textarea type='text' name='instructions' placeholder='Type here...' value={input.instructions} onChange={handleInputChange} />
+					<br />
+					<label>Which type of diet it belongs to?:</label>
+					{dietsDB.map((diet) => <div key={diet}><span>{diet}</span><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}
+					<br />
+					<input type='submit' value='Submit!' />
+				</form>
+			</div>
+		}
 		</div>
 	)
 };

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import RecipeCards from '../RecipeCards/RecipeCards';
-import { toggleLoading } from '../../actions/actions';
 import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
 // import { orderAz, orderZa, orderTopScore, orderLastScore } from '../../orderFunctions';
 
@@ -26,7 +25,6 @@ import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
 
 export default function Home() {
 	let recipesLoaded = useSelector(state => state.recipesLoaded)
-	const dispatch = useDispatch();
 	const loading = useSelector(state => state.loading);
 	const [order, setOrder] = useState({
 		type: '',
@@ -34,11 +32,9 @@ export default function Home() {
 
 	const handleChange = (e) => {
 		setOrder(prev => ({...prev, type: e.target.value}));
-	//	dispatch(toggleLoading())
 	};
 
 	const handleSubmit = (e) => {
-		//llama al sort indicado
 		e.preventDefault();
 			if (order.type === 'AZ') {
 				setOrder(prev => ({...prev, type: e.target.value }));
@@ -66,13 +62,13 @@ export default function Home() {
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='orderby'>Order by:</label>
 				<select value={order.type} name='orderby' onChange={handleChange}>
+					<option value="" disabled defaultValue=''>Select your option</option>
 					<option value='AZ'>A-Z</option>
 					<option value='ZA'>Z-A</option>
 					<option value='scorefirst'>Top Score</option>
 					<option value='scorelast'>Last Score</option>
 				</select>
 				<input type='submit' value='Order' />
-
 			</form>
 			{loading ? 
 				<div>Results (if any) should appear below</div> 

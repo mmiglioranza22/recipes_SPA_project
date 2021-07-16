@@ -5,7 +5,7 @@ import { getRecipeDetail } from '../../actions/actions';
 
 export default function RecipeCards({ recipeInfo }) {
 	const dispatch = useDispatch();
-	let { id, image, title, diets, dairyFree, glutenFree, vegan, vegetarian, dishTypes, score } = recipeInfo; // dishTypes no se necesita aca, ver bien README, se sacaria de aca y de controller getAll para API
+	let { id, image, title, diets, dairyFree, glutenFree, vegan, vegetarian, score } = recipeInfo; // dishTypes no se necesita aca, ver bien README, se sacaria de aca y de controller getAll para API
 
 	const handleClick = () => {
 		dispatch(getRecipeDetail(id));
@@ -13,7 +13,7 @@ export default function RecipeCards({ recipeInfo }) {
 
 	return (
 		<div className='cards'>
-			<img src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU'} />
+			<img src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU'} alt='' />
 			<div>Recipe name: '{title}'</div>
 			<div>
 				<div>Diet types:</div>

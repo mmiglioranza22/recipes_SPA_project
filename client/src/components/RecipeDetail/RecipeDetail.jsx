@@ -27,11 +27,11 @@ export default function RecipeDetail() {
 			{  loading ? <div>Please wait, the page is loading</div> : 
 		<div className='detail'>
 			<div>
-				<img src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU'} />
+				<img src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU'} alt=''/>
 				<div>Recipe name: '{title}'</div>
 				<div>
 					<div>Diet types:</div>
-					{dietTypes ? dietTypes.map(diet => <div key={diet}><div>{diet}</div></div>) : <div>Not specified</div>}
+					{dietTypes.length ? dietTypes.map(diet => <div key={diet}><div>{diet}</div></div>) : <div>Not specified</div>}
 					{dietTypes.includes('Vegetarian') || vegetarian ? <span>Vegetarian ✅</span> : <span>Vegetarian ❌</span>}
 					{dietTypes.includes('Vegan') || vegan ? <span>Vegan ✅</span> : <span>Vegan ❌</span>}
 					{dietTypes.includes('Gluten Free') || glutenFree ? <span>Gluten Free ✅</span> : <span>Gluten Free ❌</span>}
@@ -49,6 +49,7 @@ export default function RecipeDetail() {
 			<div>Dish type:</div>
 			<div>This recipe can be prepared for: </div>
 			{dishTypes ? dishTypes.map(type => <div key={type}><div>{type}</div></div>) : <div> all dishes and meals!</div>}
+			<div> Id number: {id}</div>
 		</div>
 		}
 		</div>	
