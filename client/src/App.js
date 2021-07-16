@@ -7,7 +7,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import Home from './components/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 import SearchBar from './components/SearchBar/SearchBar';
-import RecipeCards from './components/RecipeCards/RecipeCards';
+//import RecipeCards from './components/RecipeCards/RecipeCards';
 import RecipeDetail from './components/RecipeDetail/RecipeDetail';
 import CreateForm from './components/CreateForm/CreateForm';
 

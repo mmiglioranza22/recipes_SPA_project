@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import RecipeCards from '../RecipeCards/RecipeCards';
 import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
-// import { orderAz, orderZa, orderTopScore, orderLastScore } from '../../orderFunctions';
-
+import Pagination from '../Pagination/Pagination';
 //  Input de búsqueda para encontrar recetas por nombre
 //  Área donde se verá el listado de recetas. Deberá mostrar su:
 // 			Imagen
@@ -26,9 +25,19 @@ import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
 export default function Home() {
 	let recipesLoaded = useSelector(state => state.recipesLoaded)
 	const loading = useSelector(state => state.loading);
-	const [order, setOrder] = useState({
-		type: '',
-	});
+	const [currentPage, setCurrentPage] = useState(1);
+	const [recipesPerPage, setRecipesPerPage] = useState(9)
+	const [order, setOrder] = useState({ type: '' });
+
+	//Gets current posts
+	const indexLastRecipe = currentPage * recipesPerPage; // 1*9 = 9
+	const indexFirstRecipe = indexLastRecipe - recipesPerPage; // 9-9=0
+	const currentRecipes =  recipesLoaded.slice(indexFirstRecipe, indexLastRecipe);
+
+	//Changes page
+	const paginate = (pageNumber) => {
+			setCurrentPage(pageNumber)
+	};
 
 	const handleChange = (e) => {
 		setOrder(prev => ({...prev, type: e.target.value}));
@@ -59,6 +68,7 @@ export default function Home() {
 	return (
 		<div className='home'>
 			<div>Home component, you are now in /home</div>
+			<Pagination recipesPerPage={recipesPerPage} totalRecipes={recipesLoaded.length} paginate={paginate} currentPage={currentPage} />
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='orderby'>Order by:</label>
 				<select value={order.type} name='orderby' onChange={handleChange}>
@@ -73,8 +83,8 @@ export default function Home() {
 			{loading ? 
 				<div>Results (if any) should appear below</div> 
 				: recipesLoaded.length ? 
-				recipesLoaded.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>) 
-				: <div>No results</div>}
+				currentRecipes.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>) 
+				: null}
 		</div>
 	)
 };
