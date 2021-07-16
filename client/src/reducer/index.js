@@ -20,7 +20,8 @@ export default function rootReducer(state = initialState, action) {
 		case GET_DIETS: 
 			return {...state, dietsDB: action.payload}
 		case TOGGLE_LOADING:
-			return {...state, loading: true}
+			return {...state, loading: true};
+			
 		// -- a chequear ultimos dos casos, cuando este el PI ya terminado, NO ANTES!!!
 		case UPDATE_RECIPE:
 			//return {...state, recipesLoaded: state.recipesLoaded.forEach( r => { if(r.id === action.payload.id) r = action.payload })} // tengo que hacer un GET_ALL para que funcione
