@@ -10,7 +10,8 @@ export default function Pagination({ recipesPerPage, totalRecipes, paginate, cur
 
 	return (
 		<div>
-					{pageNumbers.length && currentPage >=1 ? <Link onClick={() => paginate(currentPage -1)} to='/home'>Previous</Link> : null }
+
+					{pageNumbers.length && currentPage > 1 ? <Link onClick={() => paginate(currentPage -1)} to='/home'>Previous</Link> : null }
 					<ul>
 						{pageNumbers.map(number => {
 							return (
