@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 
 // Ruta de detalle de receta: debe contener
 
-//  Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta)
-//  Resumen del plato
-//  Puntuación
-//  Nivel de "comida saludable"
-//  Paso a paso
+//  Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta) // OK
+//  Resumen del plato // OK
+//  Puntuación // OK
+//  Nivel de "comida saludable" // OK
+//  Paso a paso // OK
 
 export default function RecipeDetail() {
 
@@ -15,6 +15,7 @@ export default function RecipeDetail() {
 	const loading = useSelector(state => state.loading);
 	let { id, image, title, dietTypes, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = recipeDetail;
 
+	// Cleans summary & instructions html tags from API
 	let divSummary = document.createElement("div");
 	divSummary.innerHTML = summary;
 	let text1 = divSummary.textContent || divSummary.innerText || "";

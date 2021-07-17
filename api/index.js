@@ -22,7 +22,7 @@ const { conn, Diet, Recipe } = require('./src/db.js');
 
 // Syncing all the models at once.
 
-const dietTypes = ['Gluten Free', 'Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Whole30'];
+const dietTypes = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian', 'ovo vegetarian','lacto ovo vegetarian', 'vegan', 'pescatarian', 'paleo', 'primal', 'whole30', 'dairy free'];
 
 conn.sync({ force: true })
 .then(() => {

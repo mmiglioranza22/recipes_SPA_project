@@ -16,6 +16,7 @@ export default function NavBar() {
 			<div>NavBar component</div>
 			<NavLink to='/home/create'>Create your own recipe!</NavLink>
 			<NavLink to='/home'>Home</NavLink>
+			<NavLink to='/home/myrecipes'>My recipes</NavLink>
 		</div>
 	)
 };

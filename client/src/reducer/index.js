@@ -14,7 +14,7 @@ export default function rootReducer(state = initialState, action) {
 		case GET_RECIPES:
 			return {...state, recipesLoaded: action.payload, loading: false};
 		case POST_RECIPE: 
-			return {...state, recipesCreated: [...state.recipesCreated, action.payload]};
+			return {...state, recipesCreated: [...state.recipesCreated, action.payload]}; // para consumir despues solo las CreatedRecipes
 		case GET_DETAIL:
 			return {...state, recipeDetail: action.payload, loading: false};
 		case GET_DIETS: 

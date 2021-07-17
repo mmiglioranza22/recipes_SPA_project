@@ -7,12 +7,10 @@ import LandingPage from './components/LandingPage/LandingPage';
 import Home from './components/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 import SearchBar from './components/SearchBar/SearchBar';
-//import RecipeCards from './components/RecipeCards/RecipeCards';
 import RecipeDetail from './components/RecipeDetail/RecipeDetail';
 import CreateForm from './components/CreateForm/CreateForm';
+import CreatedRecipes from './components/CreatedRecipes/CreatedRecipes';
 
-
-// ver colision entre detail y form
 function App() {
   return (
     <div className="App">
@@ -21,6 +19,7 @@ function App() {
       <Route exact path='/home' component={SearchBar} />
       <Route exact path='/home/detail/:id' component={RecipeDetail} /> 
       <Route exact path='/home/create' component={CreateForm} />
+      <Route exact path='/home/myrecipes' component={CreatedRecipes} />
       <Route path='/home' component={NavBar} />
     </div>
   );

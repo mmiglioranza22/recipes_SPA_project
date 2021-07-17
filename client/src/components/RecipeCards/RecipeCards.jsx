@@ -5,7 +5,7 @@ import { getRecipeDetail } from '../../actions/actions';
 
 export default function RecipeCards({ recipeInfo }) {
 	const dispatch = useDispatch();
-	let { id, image, title, diets, dairyFree, glutenFree, vegan, vegetarian, score } = recipeInfo; // dishTypes no se necesita aca, ver bien README, se sacaria de aca y de controller getAll para API
+	let { id, image, title, diets, dairyFree, glutenFree, vegan, vegetarian, score } = recipeInfo;
 
 	const handleClick = () => {
 		dispatch(getRecipeDetail(id));
@@ -18,10 +18,10 @@ export default function RecipeCards({ recipeInfo }) {
 			<div>
 				<div>Diet types:</div>
 				{diets.length ? diets.map(diet => <div key={diet}><div>{diet}</div></div>) : <div>Not specified</div>}
-				{diets.includes('Vegetarian') || vegetarian ? <span>Vegetarian ✅</span> : <span>Vegetarian ❌</span>}
-				{diets.includes('Vegan') || vegan ? <span>Vegan ✅</span> : <span>Vegan ❌</span>}
-				{diets.includes('Gluten Free') || glutenFree ? <span>Gluten Free ✅</span> : <span>Gluten Free ❌</span>}
-				{diets.includes('Ovo-Vegetarian') || diets.includes('Paleo') || diets.includes('Vegan') || dairyFree ? <span>Dairy Free ✅</span> : <span>Dairy Free ❌</span>}
+				{diets.includes('vegetarian') || vegetarian ? <span>Vegetarian ✅</span> : <span>Vegetarian ❌</span>}
+				{diets.includes('vegan') || vegan ? <span>Vegan ✅</span> : <span>Vegan ❌</span>}
+				{diets.includes('gluten free') || glutenFree ? <span>Gluten Free ✅</span> : <span>Gluten Free ❌</span>}
+				{diets.includes('ovo vegetarian') || diets.includes('paleo') || diets.includes('vegan') || dairyFree ? <span>Dairy Free ✅</span> : <span>Dairy Free ❌</span>}
 			</div>
 			<div>Score: {score}</div>
 			<button onClick={handleClick}>
