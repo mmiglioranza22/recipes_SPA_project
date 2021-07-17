@@ -14,8 +14,6 @@ import { getDiets } from '../../actions/actions';
 //  Botones/Opciones para ordenar tanto ascendentemente como descendentemente las recetas por orden alfabético y por puntuación // OK
 //  Paginado para ir buscando y mostrando las siguientes recetas // OK
 
-// ver los errores aca, como renderizar
-
 export default function Home() {
 	let recipesLoaded = useSelector(state => state.recipesLoaded)
 	let [recipesFiltered, setRecipesFiltered] = useState([]);
@@ -34,7 +32,6 @@ export default function Home() {
 		setFiltered(false)
 	}, [dispatch]);
 
-console.log(error)
 	//Get current recipes
 	const indexLastRecipe = currentPage * recipesPerPage; // 1*9 = 9
 	const indexFirstRecipe = indexLastRecipe - recipesPerPage; // 9-9=0
@@ -104,10 +101,10 @@ console.log(error)
 				<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
 				{dietsDB.map((diet) => <div key={diet}><span>{diet}</span><input type='radio' name='dietTypes' value={diet.toLowerCase()} onClick={handleApply} /></div>)}
 				{loading ?
-					<div> 
-					<div>Results (if any) should appear below:</div>
-					{ error ? <div>{error}</div>:<div>Please wait</div>}
-				</div>
+					<div>
+						<div>Results (if any) should appear below:</div>
+						{error ? <div>{error}</div> : <div>Please wait</div>}
+					</div>
 					: (recipesLoaded.length) ?
 						currentRecipes.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
 						: null
@@ -158,10 +155,10 @@ console.log(error)
 				<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
 				{recipesFiltered.length ? <div>All '{filter}' recipes are displayed above</div> : <div>No recipes founded for '{filter}' diet</div>}
 				{loading ?
-				<div> 
-					<div>Results (if any) should appear below:</div>
-					<div>No results</div>
-				</div>	
+					<div>
+						<div>Results (if any) should appear below:</div>
+						{error ? <div>{error}</div> : <div>Please wait</div>}
+					</div>
 					: (recipesFiltered.length) ?
 						currentRecipesFiltered.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
 						: null

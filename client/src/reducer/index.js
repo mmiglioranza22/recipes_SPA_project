@@ -2,7 +2,7 @@ import { ERROR, GET_DIETS, TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE,
 
 const initialState = {
 	recipesLoaded: [],
-	recipesCreated: [], //--not required-- //Ya se guardan en la base de datos. Si hago post y get, me va a salir en recipesLoaded las recetas creadas (si las busco por nombre)
+	recipesCreated: [],
 	recipeDetail: {},
 	dietsDB: [],
 	loading: false,
@@ -15,7 +15,7 @@ export default function rootReducer(state = initialState, action) {
 		case GET_RECIPES:
 			return {...state, recipesLoaded: action.payload, loading: false};
 		case POST_RECIPE: 
-			return {...state, recipesCreated: [...state.recipesCreated, action.payload]}; // para consumir despues solo las CreatedRecipes
+			return {...state, recipesCreated: [...state.recipesCreated, action.payload]};
 		case GET_DETAIL:
 			return {...state, recipeDetail: action.payload, loading: false};
 		case GET_DIETS: 

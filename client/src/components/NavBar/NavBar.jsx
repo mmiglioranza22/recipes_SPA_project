@@ -1,10 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-// Link a /home
-// Link a /home/create
-
-
 //--not required--
 
 // Link a /home/delete

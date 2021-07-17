@@ -10,3 +10,4 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 export const BASE_URL = 'http://localhost:3002'
 export const MIN_LENGTH = 20;
+export const IMG_URL = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU';

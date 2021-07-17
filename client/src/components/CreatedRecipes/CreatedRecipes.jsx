@@ -1,13 +1,10 @@
-// componente que consume la store: state.recipesCreated y renderiza eso
-
 import React from 'react';
 import { useSelector } from "react-redux";
+import { IMG_URL } from '../../constants';
 
 export default function CreatedRecipes() {
-
 	const recipesCreated = useSelector(state => state.recipesCreated);
 
-	console.log(recipesCreated)
 	return (
 		<div>
 			{!recipesCreated.length ? <div>Oops! The are no recipes yet, go make some!</div> :
@@ -15,7 +12,7 @@ export default function CreatedRecipes() {
 					{recipesCreated.map(r => {
 						return (<div key={r.name}>
 							<div>
-								<img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU' alt='' />
+								<img src={IMG_URL} alt='' />
 								<div>Recipe name: '{r.name}'</div>
 								<div>
 									<div>Diet types:</div>

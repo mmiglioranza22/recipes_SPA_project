@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from "react-redux";
+import { IMG_URL } from '../../constants';
 
 // Ruta de detalle de receta: debe contener
 
@@ -28,7 +29,7 @@ export default function RecipeDetail() {
 			{  loading ? <div>Please wait, the page is loading</div> : 
 		<div className='detail'>
 			<div>
-				<img src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZCeiUKL-X5mZpwbvUwIGl7IL_wPG5Sb0dV20VSAvS3L3apNITgQqK4NYJ68gZFnAG_Y&usqp=CAU'} alt=''/>
+				<img src={image ? image : IMG_URL} alt=''/>
 				<div>Recipe name: '{title}'</div>
 				<div>
 					<div>Diet types:</div>
