@@ -109,7 +109,10 @@ export default function Home() {
 				<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
 				{dietsDB.map((diet) => <div key={diet}><span>{diet}</span><input type='radio' name='dietTypes' value={diet.toLowerCase()} onClick={handleApply} /></div>)}
 				{loading ?
-					<div>Results (if any) should appear below</div>
+					<div> 
+					<div>Results (if any) should appear below:</div>
+					<div>No results</div>
+				</div>
 					: (recipesLoaded.length) ?
 						currentRecipes.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
 						: null
@@ -161,7 +164,10 @@ export default function Home() {
 				<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
 				{recipesFiltered.length ? <div>All '{filter}' recipes are displayed above</div> : <div>No recipes founded for '{filter}' diet</div>}
 				{loading ?
-					<div>Results (if any) should appear below</div>
+				<div> 
+					<div>Results (if any) should appear below:</div>
+					<div>No results</div>
+				</div>	
 					: (recipesFiltered.length) ?
 						currentRecipesFiltered.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
 						: null

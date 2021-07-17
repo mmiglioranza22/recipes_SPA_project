@@ -34,11 +34,7 @@ export function validate(input) {
 export default function CreateForm() {
 	const dispatch = useDispatch();
 	const dietsDB = useSelector(state => state.dietsDB);
-
-	useEffect(() => {
-		dispatch(getDiets());
-	}, [dispatch]);
-
+	const [done, setDone] = useState(false);
 	const [errors, setErrors] = useState({});
 	const [input, setInput] = useState({
 		name: "",
@@ -48,7 +44,10 @@ export default function CreateForm() {
 		instructions: "",
 		dietTypes: []
 	});
-	const [done, setDone] = useState(false);
+
+	useEffect(() => {
+		dispatch(getDiets());
+	}, [dispatch]);
 
 	const handleInputChange = (e) => {
 		setInput(prev => {
@@ -78,7 +77,7 @@ export default function CreateForm() {
 		};
 	};
 	return (
-		<div>{done ? <Redirect to='/home' />
+		<div>{done ? <Redirect to='/home/myrecipes' />
 			:
 			<div>
 				<div>Tell us about your recipe!</div>
