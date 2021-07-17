@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getRecipes } from '../../actions/actions';
+import { clearError, getRecipes } from '../../actions/actions';
 
 export default function SearchBar () {
 	const dispatch = useDispatch();
@@ -13,6 +13,7 @@ export default function SearchBar () {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		dispatch(clearError())
 	  dispatch(getRecipes(input.name));
 	};
 

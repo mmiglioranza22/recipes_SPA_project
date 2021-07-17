@@ -1,11 +1,12 @@
-import { GET_DIETS, TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } from "../constants";
+import { ERROR, GET_DIETS, TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, CLEAR_ERROR } from "../constants";
 
 const initialState = {
 	recipesLoaded: [],
 	recipesCreated: [], //--not required-- //Ya se guardan en la base de datos. Si hago post y get, me va a salir en recipesLoaded las recetas creadas (si las busco por nombre)
 	recipeDetail: {},
 	dietsDB: [],
-	loading: false
+	loading: false,
+	error: ''
 	
 };
 
@@ -21,6 +22,10 @@ export default function rootReducer(state = initialState, action) {
 			return {...state, dietsDB: action.payload}
 		case TOGGLE_LOADING:
 			return {...state, loading: true};
+		case ERROR:
+			return {...state, error: 'We are sorry, no recipes where found'}
+		case CLEAR_ERROR:
+			return {...state, error: ''};
 			
 		// -- a chequear ultimos dos casos, cuando este el PI ya terminado, NO ANTES!!!
 		case UPDATE_RECIPE:

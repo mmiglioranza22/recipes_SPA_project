@@ -27,13 +27,14 @@ export default function Home() {
 	const [filter, setFilter] = useState('');
 	const dispatch = useDispatch();
 	const dietsDB = useSelector(state => state.dietsDB);
+	const error = useSelector(state => state.error)
 
 	useEffect(() => {
 		dispatch(getDiets());
 		setFiltered(false)
 	}, [dispatch]);
 
-
+console.log(error)
 	//Get current recipes
 	const indexLastRecipe = currentPage * recipesPerPage; // 1*9 = 9
 	const indexFirstRecipe = indexLastRecipe - recipesPerPage; // 9-9=0
@@ -50,9 +51,6 @@ export default function Home() {
 	};
 
 	const handleApply = (e) => {
-		// console.log(recipesLoaded)
-		// console.log('entro')
-		// console.log(e.target.value)
 		if (e.target.value === 'reset') {
 			setFiltered(false)
 			return
@@ -61,20 +59,18 @@ export default function Home() {
 			setRecipesFiltered(prev => prev = recipesLoaded.filter(r => r.diets.find(d => d === e.target.value)))
 			setFilter(e.target.value);
 			setFiltered(true);
-		}
-	}
-	// console.log(recipesFiltered)
-
+		};
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (order.type === 'AZ') {
 			setOrder(prev => ({ ...prev, type: e.target.value }));
-			return orderAZ(recipesLoaded)
+			return orderAZ(recipesLoaded);
 		};
 		if (order.type === 'ZA') {
 			setOrder(prev => ({ ...prev, type: e.target.value }));
-			return orderZA(recipesLoaded)
+			return orderZA(recipesLoaded);
 		};
 		if (order.type === 'scorefirst') {
 			setOrder(prev => ({ ...prev, type: e.target.value }));
@@ -87,7 +83,6 @@ export default function Home() {
 	};
 
 	if (!filtered) {
-		// console.log('!filtered')
 		return (
 			<div className='home'>
 				<div>Home component, you are now in /home</div>
@@ -111,19 +106,18 @@ export default function Home() {
 				{loading ?
 					<div> 
 					<div>Results (if any) should appear below:</div>
-					<div>No results</div>
+					{ error ? <div>{error}</div>:<div>Please wait</div>}
 				</div>
 					: (recipesLoaded.length) ?
 						currentRecipes.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
 						: null
 				}
 			</div>
-		)
+		);
 	};
 
 
 	if (filtered) {
-		// console.log('filtered')
 		const handleSubmit = (e) => {
 			e.preventDefault();
 			if (order.type === 'AZ') {
@@ -173,6 +167,6 @@ export default function Home() {
 						: null
 				}
 			</div>
-		)
-	}
+		);
+	};
 };

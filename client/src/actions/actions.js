@@ -1,10 +1,14 @@
 import axios from "axios";
-import { TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL, GET_DIETS } from "../constants";
+import { CLEAR_ERROR, ERROR, TOGGLE_LOADING, GET_RECIPES, GET_DETAIL, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, BASE_URL, GET_DIETS } from "../constants";
 
 
 export function toggleLoading(){
 	return { type: TOGGLE_LOADING };
 };
+
+export function clearError() {
+	return {type: CLEAR_ERROR}
+}
 
 export function getDiets() {
 	return function(dispatch) {
@@ -20,7 +24,10 @@ export function getRecipes(name) {
 		dispatch(toggleLoading());
 		return axios.get(`${BASE_URL}/recipes?name=${name}`)
 			.then(json => {
-				dispatch({ type: GET_RECIPES, payload: json.data }); // no catcheo nada, los errores ya los maneje en el back, aca recibe o bien .data o error(ir al error endware y manejarlo ahi)
+				dispatch({ type: GET_RECIPES, payload: json.data });
+			})
+			.catch(err => {
+				dispatch({type: ERROR})
 			}); 
 	};
 };
@@ -30,7 +37,10 @@ export function getRecipeDetail(id) {
 		dispatch(toggleLoading());
 		return axios.get(`${BASE_URL}/recipes/${id}`)
 			.then(json => {
-				dispatch({ type: GET_DETAIL, payload: json.data }); // no catcheo nada, los errores ya los maneje en el back, aca recibe o bien .data o error(ir al error endware y manejarlo ahi)
+				dispatch({ type: GET_DETAIL, payload: json.data });
+			})
+			.catch(err => {
+				dispatch({type: ERROR})
 			});
 	};
 };
@@ -54,7 +64,7 @@ export function updateRecipe(id) {
 		return axios.put(`${BASE_URL}/recipes/${id}`)
 			.then( json => {
 				dispatch({type: UPDATE_RECIPE, payload: json.data}) // payload, el id // el json.data es un array con 0 o 1 si fue modificado o no, tendria que cambiar el metodo en el controller
-			});
+			});															// directamente sin payload, el reducer se encarga de modificar la recipe en el array recipesCreated de la store
 	};
 };
 
@@ -64,7 +74,7 @@ export function deleteRecipe(id) {
 		return axios.delete(`${BASE_URL}/recipes/${id}`)
 			.then( json => {
 				dispatch({type: DELETE_RECIPE, payload: json.data}) // payload, el id // el json.data es 200 con un texto si fue eliminada, tendria que cambiar el metodo en el controller
-			})
+			})															// idem update, sin payload. se le hace un filter a recipesCreated
 	}
 }
 
