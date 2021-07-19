@@ -82,8 +82,11 @@ export default function Home() {
 
 	if (!filtered) {
 		return (
-			<div >
-						<Pagination className={s.pagination} recipesPerPage={recipesPerPage} totalRecipes={recipesLoaded.length} paginate={paginate} currentPage={currentPage} />
+			<div>
+				{currentRecipes.length ?
+					<Pagination className={s.pagination} recipesPerPage={recipesPerPage} totalRecipes={recipesLoaded.length} paginate={paginate} currentPage={currentPage} />
+					: null
+				}
 				<div className={s.home}>
 					<div className={s.order}>
 						<div>Order by:</div>
@@ -95,29 +98,29 @@ export default function Home() {
 								<option value='scorefirst'>Top Score</option>
 								<option value='scorelast'>Last Score</option>
 							</select>
-							<input type='submit' value='Order' />
+							<input className={s.submit} type='submit' value='Order' />
 						</form>
 					</div>
 					<div className={s.filter}>
-						<div htmlFor='filter'>Diet type:</div>
-					{dietsDB.map((diet) => <div key={diet} className={s.diets}><span>{diet}</span><input type='radio' name='dietTypes' value={diet.toLowerCase()} onClick={handleApply} /></div>)}
-					<div className={s.diets}>
-						<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
-					</div>
+						<div>Diet type:</div>
+						{dietsDB.map((diet) => <div key={diet} className={s.diets}><span>{diet}</span><input type='radio' name='dietTypes' value={diet.toLowerCase()} onClick={handleApply} /></div>)}
+						<div className={s.diets}>
+							<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
+						</div>
 					</div>
 					<div className={s.recipes}>
 
-					{loading ?
-						<div>
-							<div>Results (if any) should appear below:</div>
-							{error ? <div>{error}</div> : <div>Please wait</div>}
-						</div>
-						: (recipesLoaded.length) ?
-						currentRecipes.map(recipe => <div key={recipe.id}><RecipeCards className={s.recipe} recipeInfo={recipe} /></div>)
-						: null
-					}
-				</div>
+						{loading ?
+							<div>
+								<div>Results (if any) should appear below:</div>
+								{error ? <div>{error}</div> : <div>Please wait</div>}
+							</div>
+							: (recipesLoaded.length) ?
+								currentRecipes.map(recipe => <div key={recipe.id}><RecipeCards className={s.recipe} recipeInfo={recipe} /></div>)
+								: null
+						}
 					</div>
+				</div>
 			</div>
 		);
 	};
@@ -144,35 +147,47 @@ export default function Home() {
 			};
 		};
 		return (
-			<div className='home'>
-				<div>Home component, you are now in /home</div>
-				<Pagination recipesPerPage={recipesPerPage} totalRecipes={recipesFiltered.length} paginate={paginate} currentPage={currentPage} />
-				<form onSubmit={handleSubmit}>
-					<label htmlFor='orderby'>Order by:</label>
-					<select value={order.type} name='orderby' onChange={handleChange}>
-						<option value="" disabled defaultValue=''>Select your option</option>
-						<option value='AZ'>A-Z</option>
-						<option value='ZA'>Z-A</option>
-						<option value='scorefirst'>Top Score</option>
-						<option value='scorelast'>Last Score</option>
-					</select>
-					<input type='submit' value='Order' />
-				</form>
-				<div>
-					<label htmlFor='filter'>Diet type:</label>
-				</div>
-				<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
-				{recipesFiltered.length ? <div>All '{filter}' recipes are displayed above</div> : <div>No recipes founded for '{filter}' diet</div>}
-				{loading ?
-					<div>
-						<div>Results (if any) should appear below:</div>
-						{error ? <div>{error}</div> : <div>Please wait</div>}
-					</div>
-					: (recipesFiltered.length) ?
-						currentRecipesFiltered.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
-						: null
+			<div>
+				{recipesFiltered.length ?
+					<Pagination className={s.pagination} recipesPerPage={recipesPerPage} totalRecipes={recipesFiltered.length} paginate={paginate} currentPage={currentPage} />
+					: null
 				}
+				<div className={s.home}>
+					<div className={s.order}>
+						<div>Order by:</div>
+						<form onSubmit={handleSubmit}>
+							<select className={s.select} value={order.type} name='orderby' onChange={handleChange}>
+								<option value="" disabled defaultValue=''>Select your option</option>
+								<option value='AZ'>A-Z</option>
+								<option value='ZA'>Z-A</option>
+								<option value='scorefirst'>Top Score</option>
+								<option value='scorelast'>Last Score</option>
+							</select>
+							<input className={s.submit} type='submit' value='Order' />
+						</form>
+					</div>
+					<div className={s.filter}>
+						<div>Diet type:</div>
+						<div className={s.diets}>
+						{recipesFiltered.length ? <div>All '{filter}' recipes are displayed above /</div> : <div>No recipes founded for '{filter}' diet /</div>}
+							<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
+						</div>
+					</div>
+					<div className={s.recipes}>
+						{loading ?
+							<div>
+								<div>Results (if any) should appear below:</div>
+								{error ? <div>{error}</div> : <div>Please wait</div>}
+							</div>
+							: (recipesFiltered.length) ?
+								currentRecipesFiltered.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
+								: null
+						}
+					</div>
+				</div>
 			</div>
+
+
 		);
 	};
 };

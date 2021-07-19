@@ -1,15 +1,38 @@
+.container{
+	position: relative;
+}
+
+
 .page{
 	width: 15px;
 	padding: 5px;
-	background-color: whitesmoke;
-	margin: 5px
+	background-color:  rgba(240, 248, 255, 0.0);
+	margin: 5px 15px;
+	border: 2px solid none;
+	border-radius: 5px;
 	
+}
+.page:hover {
+	 background-color:rgba(240, 248, 255, 1);
 }
 
 .number {
 	text-decoration: none;
 	color:black;
 	font-weight: 700;
-	margin: 5px
+	margin: 5px 5px;
 
+}
+
+.buttons {
+text-decoration: none;
+color: black;
+
+}
+
+.buttons:hover {
+	border: 2px solid none;
+	 background-color:rgba(240, 248, 255, 1);
+	border-radius: 5px;
+	padding: 0px 5px
 }

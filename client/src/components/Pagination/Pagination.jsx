@@ -10,9 +10,9 @@ export default function Pagination({ recipesPerPage, totalRecipes, paginate, cur
 	};
 
 	return (
-		<div>
+		<div className={s.container}>
 
-					{pageNumbers.length && currentPage > 1 ? <Link onClick={() => paginate(currentPage -1)} to='/home'>Previous</Link> : null }
+					{pageNumbers.length && currentPage > 1 ? <Link className={s.buttons} onClick={() => paginate(currentPage -1)} to='/home'>Previous</Link> : null }
 					<span className={s.page}>
 						{pageNumbers.map(number => {
 							return (
@@ -22,7 +22,7 @@ export default function Pagination({ recipesPerPage, totalRecipes, paginate, cur
 							)
 						})}
 					</span>
-					{pageNumbers.length  && currentPage <= pageNumbers.length-1? <Link onClick={() => paginate(currentPage + 1)} to='/home' >Next</Link> : null }
+					{pageNumbers.length  && currentPage <= pageNumbers.length-1? <Link className={s.buttons} onClick={() => paginate(currentPage + 1)} to='/home' >Next</Link> : null }
 		</div>
 	)
 }

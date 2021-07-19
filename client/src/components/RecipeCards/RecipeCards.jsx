@@ -15,7 +15,7 @@ export default function RecipeCards({ recipeInfo }) {
 
 	return (
 		<div className={s.recipe_container}>
-			<img src={image ? image : IMG_URL} alt='' />
+			<img className={s.img} src={image ? image : IMG_URL} alt='' />
 
 			<div>Recipe name: <span className={s.name}>'{title}'</span></div>
 			<div>
