@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearError, getRecipes } from '../../actions/actions';
+import s from './SearchBar.module.css';
+
 
 export default function SearchBar () {
 	const dispatch = useDispatch();
@@ -18,11 +20,10 @@ export default function SearchBar () {
 	};
 
 	return (
-		<div className='search'>
-		<label>What recipes are you looking for?</label>
+		<div className={s.searchbar}>
 		<form onSubmit={handleSubmit}>
-			<input type="text" id='name' autoComplete='off' placeholder='Type here...' value={input.value} onChange={handleChange} />
-			<input type="submit" value='Search' />
+			<input type="text" id='name' autoComplete='off' placeholder='Search recipes here!' value={input.value} onChange={handleChange} className={s.input} />
+			<input type="submit" value='Find' className={s.submit} />
 		</form>
 		</div>
 	)

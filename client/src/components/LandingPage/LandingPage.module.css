@@ -1,0 +1,70 @@
+/* html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+	margin: 10px;
+	background-color: green;
+} */
+
+.container {
+		position: absolute;
+		height: auto;
+		bottom: 0;
+		top: 0;
+		left: 0;
+		right: 0;
+    width: 100%;
+    height: 100%;
+		background-image: url('https://lovefoodhatewaste.ca/wp-content/uploads/2020/11/FoodBackgroundNomeat.jpg');
+   	background-repeat:no-repeat;
+  	background-size:cover;
+		opacity: 1;
+		
+		
+	}
+
+	.main{
+		position: absolute;
+		top: 415px;
+		left: 175px;
+	}
+	
+	h1 {
+		font-size: 3rem;
+		color: azure;
+		
+	}
+	.enter {
+		position:absolute;
+		left: 450px;
+		top: 180px;
+		height: 50px;
+		width: 10rem;
+		border-radius: 5px;
+		font-size: 2rem;
+		text-align: center;
+		color:aliceblue;
+		border: 4px solid aliceblue;
+		text-decoration: none;
+		opacity: 1;
+		font-weight: 700;		
+	}
+
+	.enter:hover {
+		background-color: rgb(187, 155, 113);
+		/* color:black; */
+		font-weight: 700;
+		/* border: 3px solid aliceblue; */
+		opacity: 1;
+	}
+
+
+	
+
+ 
+
+

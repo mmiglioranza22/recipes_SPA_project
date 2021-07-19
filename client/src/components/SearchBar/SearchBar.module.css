@@ -1,0 +1,22 @@
+.searchbar{
+	padding: 1.5rem;
+	opacity: 1;
+}
+
+.input {
+	margin-right: 15px;
+	padding: 0.25rem;
+	border-radius: 5px;
+}
+
+.submit {
+	padding: 0.25rem 0.9rem;
+	border-radius: 5px;
+	background-color: rgba(232,232,235, 0.5);
+	font-weight: 700;
+}
+
+.submit:hover {
+	border: 2px solid black;
+	background-color: rgba(232,232,235, 1);
+}

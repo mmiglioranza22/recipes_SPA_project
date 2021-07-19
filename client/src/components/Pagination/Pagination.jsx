@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import s from './Pagination.module.css';
 
 export default function Pagination({ recipesPerPage, totalRecipes, paginate, currentPage }) {
 	const pageNumbers = [];
@@ -12,15 +13,15 @@ export default function Pagination({ recipesPerPage, totalRecipes, paginate, cur
 		<div>
 
 					{pageNumbers.length && currentPage > 1 ? <Link onClick={() => paginate(currentPage -1)} to='/home'>Previous</Link> : null }
-					<ul>
+					<span className={s.page}>
 						{pageNumbers.map(number => {
 							return (
-								<li key={number}>
-									<Link onClick={() => paginate(number)} to='/home'>{number}</Link>
-								</li>
+								<span key={number}>
+									<Link className={s.number}onClick={() => paginate(number)} to='/home'>{number}</Link>
+								</span>
 							)
 						})}
-					</ul>
+					</span>
 					{pageNumbers.length  && currentPage <= pageNumbers.length-1? <Link onClick={() => paginate(currentPage + 1)} to='/home' >Next</Link> : null }
 		</div>
 	)

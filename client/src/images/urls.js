@@ -63,6 +63,3 @@
 // https://st4.depositphotos.com/2890321/19913/i/1600/depositphotos_199139518-stock-photo-kitchen-utensils-cooking-wooden-table.jpg
 // https://envato-shoebox-0.imgix.net/d500/90d2-49ae-4d29-8fe4-539678b5cb42/2019_01_22_155446.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=9d26a69c654ea23633929e803c6b7138
 // https://envato-shoebox-0.imgix.net/3c98/988a-21cc-4c46-be23-44db915ecde1/3-03102.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=f2d12cc826c0e4518af2e227ef5f8afb
-
-
-

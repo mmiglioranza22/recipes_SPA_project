@@ -1,0 +1,44 @@
+.recipe_container {
+	background-color: rgba(240, 248, 255, 0.75) ;
+	border: 3px solid black;
+	border-radius: 10px;
+	margin: 0px 2px;
+	height: 100%;
+
+}
+.name {
+	font-weight:700;
+	font-style: oblique;
+}
+img {
+	max-height: 250px;
+  max-width: 250px;
+	margin: 5px;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.dietType {
+	display: inline-block;
+	margin: 1px 1px;
+	padding: 1px 9px;
+	/* border: 2px solid red */
+	text-transform: capitalize;
+	font-style: italic;
+}
+
+.emoji{
+	/* border: 2px solid blue; */
+
+}
+.spangrid {
+	margin: 2px 0px;
+	display: grid;
+	grid-template-columns: auto auto;
+	
+}
+
+.emoji span {
+	margin:0px 2px;
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}

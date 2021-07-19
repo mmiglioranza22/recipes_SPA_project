@@ -1,0 +1,15 @@
+.page{
+	width: 15px;
+	padding: 5px;
+	background-color: whitesmoke;
+	margin: 5px
+	
+}
+
+.number {
+	text-decoration: none;
+	color:black;
+	font-weight: 700;
+	margin: 5px
+
+}
