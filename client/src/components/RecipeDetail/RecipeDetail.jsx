@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { IMG_URL } from '../../constants';
+import s from './RecipeDetail.module.css';
 
 // Ruta de detalle de receta: debe contener
 
@@ -25,9 +26,9 @@ export default function RecipeDetail() {
 	let text2 = divInstructions.textContent || divInstructions.innerText || "";
 	
 	return (
-		<div>
+		<div className={s,loading}>
 			{  loading ? <div>Please wait, the page is loading</div> : 
-		<div className='detail'>
+		<div className={s.container}>
 			<div>
 				<img src={image ? image : IMG_URL} alt=''/>
 				<div>Recipe name: '{title}'</div>

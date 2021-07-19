@@ -1,0 +1,76 @@
+.container {
+	margin: 0 auto;
+	position: relative;
+	top:25px;
+	display: flex;
+	flex-direction: column;
+	border: 2px solid black;
+	border-radius: 10px;;
+	width: 550px;
+	background-color: rgba(240, 248, 255, 0.9);
+}
+
+textarea {
+	padding: 0.25rem;
+	border-radius: 5px;
+	width:90%
+}
+	
+.input {
+	padding: 0.25rem;
+	border-radius: 5px;
+	width:90%
+	
+}
+
+.labels {
+	margin: 5px;
+	margin-bottom: 5px;
+}
+.title {
+	margin: 15px 5px;
+	font-size: larger;
+	font-style: italic;
+}
+
+.scores {
+width:auto;
+
+justify-content: center;
+margin: 0px 10px;
+margin-bottom: 5px;
+}
+
+.dietTypes {
+text-transform: capitalize;
+
+display: inline-block;
+margin: 15px 10px;
+}
+
+
+.submit {
+	padding: 0.25rem 0.9rem;
+	border-radius: 5px;
+	background-color: rgba(232,232,235, 1);
+	font-weight: 700;
+	margin: 10px;
+	width: 90%
+}
+
+.submit:hover{
+color:aliceblue;
+background-color: black;
+}
+
+
+.danger {
+ color: red;
+ font-weight: 700;
+ border: 3px solid red;
+}
+.danger_notice {
+ color: red;
+ font-weight: 700;
+ 
+}

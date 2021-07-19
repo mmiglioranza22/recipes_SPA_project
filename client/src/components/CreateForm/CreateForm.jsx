@@ -3,6 +3,7 @@ import { getDiets, postRecipe } from '../../actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { MIN_LENGTH } from '../../constants';
 import { Redirect } from 'react-router-dom';
+import s from './CreateForm.module.css';
 
 
 // Ruta de creación de recetas: debe contener
@@ -79,33 +80,37 @@ export default function CreateForm() {
 	return (
 		<div>{done ? <Redirect to='/home/myrecipes' />
 			:
-			<div>
-				<div>Tell us about your recipe!</div>
-				<div>(Fields with * are mandatory)</div>
+			<div className={s.container}>
+				<div className={s.title}>
+					<div>Tell us about your recipe!</div>
+					<div>(Fields with * are mandatory)</div>
+				</div>
 				<form onSubmit={handleSubmit}>
-					<label htmlFor='name' >Recipe's Name:</label>
-					<span>*</span><input className={errors.name && 'danger'}
+					<div className={s.labels}><label>*Recipe's Name:</label>
+					<input className={errors.name && s.danger}
 						type='text' name='name' autoComplete='off' placeholder='Type here...' value={input.name} onChange={handleInputChange} />
-					<br />
-					<p className="danger">{errors.name}</p>
-					<label htmlFor='summary'>Brief summary:</label>
-					<span>*</span><textarea className={errors.summary && 'danger'}
+
+					{errors.name ? <div className={s.danger_notice}>{errors.name}</div> : null}
+					<div className={s.labels}><label>*Brief summary:</label></div>
+					<textarea className={errors.summary && s.danger}
 						type='text' name='summary' placeholder='Type here...' value={input.summary} onChange={handleInputChange} />
-					<br />
-					<p className="danger">{errors.summary}</p>
+					{errors.summary ? <div className={s.danger_notice}>{errors.summary}</div> : null}
+						</div>
 					<label htmlFor='score'>Score:</label>
-					<input type='number' max='100' min='0' name='score' value={input.score} onChange={handleInputChange} />
-					<br />
+					<input className={s.scores} type='number' max='100' min='0' name='score' value={input.score} onChange={handleInputChange} />
+
 					<label htmlFor='healthScore'>Health score:</label>
-					<input type='number' max='100' min='0' name='healthScore' value={input.healthScore} onChange={handleInputChange} />
-					<br />
-					<label htmlFor='instructions'>Step-by-step instructions:</label>
-					<textarea type='text' name='instructions' placeholder='Type here...' value={input.instructions} onChange={handleInputChange} />
-					<br />
-					<label>Which type of diet it belongs to?:</label>
-					{dietsDB.map((diet) => <div key={diet}><span>{diet}</span><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}
-					<br />
-					<input type='submit' value='Submit!' />
+					<input className={s.scores} type='number' max='100' min='0' name='healthScore' value={input.healthScore} onChange={handleInputChange} />
+
+					<div>
+						<label htmlFor='instructions'>Step-by-step instructions:</label>
+						<textarea type='text' name='instructions' placeholder='Type here...' value={input.instructions} onChange={handleInputChange} />
+					</div>
+
+					<div>Which type of diet suits your recipe?:</div>
+					{dietsDB.map((diet) => <div key={diet} className={s.dietTypes}><div>{diet}</div><input type='checkbox' name='dietTypes' value={diet} onChange={handleInputChange} /></div>)}
+
+					<input className={s.submit} type='submit' value='Submit!' />
 				</form>
 			</div>
 		}

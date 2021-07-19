@@ -111,7 +111,7 @@ export default function Home() {
 					<div className={s.recipes}>
 
 						{loading ?
-							<div>
+							<div className={s.loading}>
 								<div>Results (if any) should appear below:</div>
 								{error ? <div>{error}</div> : <div>Please wait</div>}
 							</div>
@@ -175,10 +175,10 @@ export default function Home() {
 					</div>
 					<div className={s.recipes}>
 						{loading ?
-							<div>
+							<div className={s.loading}>
 								<div>Results (if any) should appear below:</div>
 								{error ? <div>{error}</div> : <div>Please wait</div>}
-							</div>
+							</div >
 							: (recipesFiltered.length) ?
 								currentRecipesFiltered.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
 								: null
