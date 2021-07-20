@@ -72,6 +72,7 @@ async function getRecipeById(req, res, next) {
 	};
 };
 
+
 async function createRecipe(req, res, next) {
 	try {
 		let { name, summary, score, healthScore, instructions, dietTypes } = req.body;

@@ -1,0 +1,75 @@
+.container {
+	top:25px;
+}
+
+.loading {
+	position: relative;
+	margin: 0 auto;
+	top:50px;
+	padding: 0.25rem 0.9rem;
+	border-radius: 5px;
+	background-color: rgba(232,232,235, 1);
+	font-weight: 700;
+	width: 50%
+}
+
+.recipe {
+	display: inline-block;
+	margin: 5px 5px;
+	background-color: rgba(240, 248, 255, 0.9);
+	height: auto;
+	border: 3px solid black;
+	border-radius: 10px;
+}
+
+.recipe_container {
+	background-color: rgba(240, 248, 255, 0.75) ;
+	border: 2px solid black;
+	border-radius: 10px;
+	margin: 2px 2px;
+	/* padding: 2px 2px; */
+	height: 99%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	justify-content: space-evenly;
+
+
+}
+.name {
+	font-weight:700;
+	font-style: oblique;
+}
+.img {
+	max-height: 250px;
+  max-width: 260px;
+	margin: 5px;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.dietType {
+	display: inline-block;
+	margin: 1px 1px;
+	padding: 1px 9px;
+	/* border: 2px solid red */
+	text-transform: capitalize;
+	font-style: italic;
+}
+
+.emoji{
+	/* border: 2px solid blue; */
+
+}
+.spangrid {
+	margin: 2px 0px;
+	display: grid;
+	grid-template-columns: auto auto;
+	
+}
+
+.emoji span {
+	margin:0px 2px;
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}

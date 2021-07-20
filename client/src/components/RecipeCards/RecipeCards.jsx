@@ -20,7 +20,7 @@ export default function RecipeCards({ recipeInfo }) {
 			<div>Recipe name: <span className={s.name}>'{title}'</span></div>
 			<div>
 				<span>Diet types: </span>
-				{diets.length ? diets.map(diet => <div className={s.dietType}key={diet}><span>{diet}</span></div>) : <span>Not specified</span>}
+				{diets.length ? diets.map(diet => <div className={s.dietType} key={diet}><span>{diet}</span></div>) : <span>Not specified</span>}
 				<div className={s.emoji}>
 					<div className={s.spangrid}>
 				{diets.includes('vegetarian') || vegetarian ? <span>Vegetarian ✅</span> : <span>Vegetarian ❌</span>}
