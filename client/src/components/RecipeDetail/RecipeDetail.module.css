@@ -6,6 +6,72 @@
 	flex-direction: column;
 	border: 2px solid black;
 	border-radius: 10px;;
-	width: 550px;
+	width: 80%;
 	background-color: rgba(240, 248, 255, 0.9);
+}
+
+.loading {
+	position: relative;
+	margin: 0 auto;
+	top:50px;
+	padding: 0.25rem 0.9rem;
+	border-radius: 5px;
+	background-color: rgba(232,232,235, 1);
+	font-weight: 700;
+	width: 50%
+}
+
+.title{
+	margin: 5px;
+	font-size:xx-large; 
+	font-weight: 700;
+
+}
+
+.image{
+	max-width: 500px;
+	max-height: 300px;
+	border: 2px solid black;
+	border-radius: 5px;
+
+}
+
+.summary {
+	width: 80%;
+	margin: 0 auto;
+	text-align: justify;
+	font-style: italic;
+	font-weight: 700;
+
+}
+
+.instructions{
+	width: 80%;
+	margin: 0 auto;
+	text-align: justify;
+	font-style: italic;
+	font-weight: 700;
+}
+
+.score {
+	display: inline-block;
+	padding: 5px;
+/* justify-content: ; */
+margin: 5px
+}
+
+.diets {
+	display: flex;
+	justify-content: center;
+	padding: 5px;
+	
+}
+.diet{
+	margin: 0px 25px;
+	text-transform: capitalize;
+}
+.dishes{
+	display: inline-block;
+	padding: 5px;
+	text-transform: capitalize;
 }

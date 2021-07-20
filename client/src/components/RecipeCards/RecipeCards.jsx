@@ -33,9 +33,12 @@ export default function RecipeCards({ recipeInfo }) {
 			<div>Score: <span>{score}</span> /
 			{score > 85 ? <span> (Pretty good!)</span> : score > 65 ? <span> (Not bad!)</span>: score > 45 ? <span> (Average)</span> : score > 35 ? <span> (Could be better)</span> : <span> (Eat at own risk!)</span>}
 			</div> 
-			<button onClick={handleClick}>
-				<Link to={`/home/detail/${id}`}>Show details</Link>
+			<div className={s.details_container}>
+			<button className={s.button_border} onClick={handleClick}>
+				<Link className={s.details} to={`/home/detail/${id}`}>Show details</Link>
 			</button>
+
+			</div>
 		</div>
 	)
 };
