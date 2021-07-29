@@ -43,29 +43,12 @@ export default function CreatedRecipes() {
 									<div className={s.titles}>Dish type:</div>
 									<div>This recipe can be prepared for all dishes and meals!</div>
 									<br />
-
 								</div>
-
 								)
 					})}
 							</div>
-
-
 			}
-
-
-
 						</div>
-
-
-
-
-
-
-
-
-
-
 
 						)
 					};

@@ -8,10 +8,6 @@ export default function SearchBar () {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState({ name: '' });
 
-	// useEffect(()=> {
-	// 	dispatch(getRecipes('pasta'))
-	// }, [dispatch]);
-
 	const handleChange = (e) => {
 		setInput( prev => {
 			return {...prev, name: e.target.value}

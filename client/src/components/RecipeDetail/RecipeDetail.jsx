@@ -3,16 +3,7 @@ import { useSelector } from "react-redux";
 import { IMG_URL } from '../../constants';
 import s from './RecipeDetail.module.css';
 
-// Ruta de detalle de receta: debe contener
-
-//  Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta) // OK
-//  Resumen del plato // OK
-//  Puntuación // OK
-//  Nivel de "comida saludable" // OK
-//  Paso a paso // OK
-
 export default function RecipeDetail() {
-
 	const recipeDetail = useSelector(state => state.recipeDetail);
 	const loading = useSelector(state => state.loading);
 	let { id, image, title, dietTypes, vegetarian, vegan, glutenFree, dairyFree, dishTypes, summary, spoonacularScore, healthScore, instructions } = recipeDetail;

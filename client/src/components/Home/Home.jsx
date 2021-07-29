@@ -5,15 +5,7 @@ import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
 import Pagination from '../Pagination/Pagination';
 import { getDiets, getRecipes } from '../../actions/actions';
 import s from './Home.module.css'
-//  Input de búsqueda para encontrar recetas por nombre //
-//  Área donde se verá el listado de recetas. // OK
-// 	Deberá mostrar su: 
-// 			Imagen	//OK
-// 			Nombre	//OK
-// 			Tipo de dieta (vegetariano, vegano, apto celíaco, etc) //OK
-//  Botones/Opciones para filtrar por por tipo de dieta // OK
-//  Botones/Opciones para ordenar tanto ascendentemente como descendentemente las recetas por orden alfabético y por puntuación // OK
-//  Paginado para ir buscando y mostrando las siguientes recetas // OK
+
 
 export default function Home() {
 	let recipesLoaded = useSelector(state => state.recipesLoaded)
@@ -35,8 +27,8 @@ export default function Home() {
 	}, [dispatch]);
 
 	//Get current recipes
-	const indexLastRecipe = currentPage * recipesPerPage; // 1*9 = 9
-	const indexFirstRecipe = indexLastRecipe - recipesPerPage; // 9-9=0
+	const indexLastRecipe = currentPage * recipesPerPage; // 1*10 = 10
+	const indexFirstRecipe = indexLastRecipe - recipesPerPage; // 10-10=0
 	const currentRecipes = recipesLoaded.slice(indexFirstRecipe, indexLastRecipe);
 	const currentRecipesFiltered = recipesFiltered.slice(indexFirstRecipe, indexLastRecipe);
 

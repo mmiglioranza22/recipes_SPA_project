@@ -59,7 +59,7 @@ export function postRecipe(recipe) {
 	return function (dispatch) {
 		return axios.post(`${BASE_URL}/recipe`, recipe)
 			.then(json => {
-				dispatch({type: POST_RECIPE, payload: json.data}) // la respuesta que me da el back, una vez que se creo la receta (los dietTypes aparecen en json.data.diets[i].name) 
+				dispatch({type: POST_RECIPE, payload: json.data})
 			});	
 	};
 };
@@ -73,8 +73,8 @@ export function updateRecipe(id) {
 	return function (dispatch){
 		return axios.put(`${BASE_URL}/recipes/${id}`)
 			.then( json => {
-				dispatch({type: UPDATE_RECIPE, payload: json.data}) // payload, el id // el json.data es un array con 0 o 1 si fue modificado o no, tendria que cambiar el metodo en el controller
-			});															// directamente sin payload, el reducer se encarga de modificar la recipe en el array recipesCreated de la store
+				dispatch({type: UPDATE_RECIPE, payload: json.data}) 
+			});															
 	};
 };
 
@@ -83,8 +83,8 @@ export function deleteRecipe(id) {
 	return function (dispatch){
 		return axios.delete(`${BASE_URL}/recipes/${id}`)
 			.then( json => {
-				dispatch({type: DELETE_RECIPE, payload: json.data}) // payload, el id // el json.data es 200 con un texto si fue eliminada, tendria que cambiar el metodo en el controller
-			})															// idem update, sin payload. se le hace un filter a recipesCreated
+				dispatch({type: DELETE_RECIPE, payload: json.data}) 
+			})															
 	}
 }
 

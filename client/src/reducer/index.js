@@ -27,7 +27,7 @@ export default function rootReducer(state = initialState, action) {
 		case CLEAR_ERROR:
 			return {...state, error: ''};
 			
-		// -- a chequear ultimos dos casos, cuando este el PI ya terminado, NO ANTES!!!
+		// -- not required
 		case UPDATE_RECIPE:
 			//return {...state, recipesLoaded: state.recipesLoaded.forEach( r => { if(r.id === action.payload.id) r = action.payload })} // tengo que hacer un GET_ALL para que funcione
 			return {...state, recipesCreated: state.recipesCreated.forEach( r => { if(r.id === action.payload.id) r = action.payload })}; // funciona sin hacer un GET_ALL, pero se borra si doy F5

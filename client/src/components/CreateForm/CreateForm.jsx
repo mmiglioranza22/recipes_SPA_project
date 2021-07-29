@@ -6,17 +6,6 @@ import { Redirect } from 'react-router-dom';
 import s from './CreateForm.module.css';
 
 
-// Ruta de creación de recetas: debe contener
-
-//  Un formulario controlado con los siguientes campos // OK
-// Nombre		// OK
-// Resumen del plato // OK
-// Puntuación	// OK
-// Nivel de "comida saludable"		// OK
-// Paso a paso		// OK
-//  Posibilidad de seleccionar/agregar uno o más tipos de dietas	// OK
-//  Botón/Opción para crear una nueva receta // OK
-
 export function validate(input) {
 	let errors = {};
 	if (!input.name) {
