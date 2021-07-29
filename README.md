@@ -18,7 +18,7 @@ In this SPA you will be able to search for recipes using multiple filters and yo
 - Install all dependencies inside ./client folder
 - Create a postgres database ('food')
 - Go to https://spoonacular.com/ and create an account in order to obtain an apiKey
-- Once you have your apiKey, create a .env file in ./api. with the following:
+- Once you have your apiKey, create a .env file in ./api with the following:
     - DB_USER={your postgres username}
     - DB_PASSWORD={your postgres password}
     - DB_HOST=localhost
