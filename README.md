@@ -31,6 +31,8 @@ In this website you will be able to search for recipes using multiple filters an
 ## Disclaimer
 All images shown in this project were obtained from the internet and are used with the sole and unique intention of fulfilling an educational assignment. This project is not intended nor allowed to be used for commercial purposes nor the like. No legal ownership nor copyright is claimed on the above-mentioned images, belonging to their rightful owners. If you have comments or complaints in this regard, please contact me at mmiglioranza22@gmail.com for further discussion.
 
+The project does not contain a fully developed CRUD since it was not requested, yet their development and implementation will eventualy be uploaded to a final version. Same thing for testing.
+
 ## Preview (desktop):
 ### Landing page
 ![Screenshot at 2021-07-29 12-52-50](https://user-images.githubusercontent.com/79772395/127535639-efc9ad88-2faf-45d5-b5f9-8901cd125600.png)
