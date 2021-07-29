@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import RecipeCards from '../RecipeCards/RecipeCards';
 import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
 import Pagination from '../Pagination/Pagination';
-import { getDiets } from '../../actions/actions';
+import { getDiets, getRecipes } from '../../actions/actions';
 import s from './Home.module.css'
 //  Input de búsqueda para encontrar recetas por nombre //
 //  Área donde se verá el listado de recetas. // OK
@@ -20,7 +20,7 @@ export default function Home() {
 	let [recipesFiltered, setRecipesFiltered] = useState([]);
 	const loading = useSelector(state => state.loading);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [recipesPerPage] = useState(9)
+	const [recipesPerPage] = useState(10)
 	const [order, setOrder] = useState({ type: '' });
 	const [filtered, setFiltered] = useState(false);
 	const [filter, setFilter] = useState('');
@@ -30,6 +30,7 @@ export default function Home() {
 
 	useEffect(() => {
 		dispatch(getDiets());
+		dispatch(getRecipes())
 		setFiltered(false)
 	}, [dispatch]);
 
@@ -85,7 +86,7 @@ export default function Home() {
 			<div>
 				{currentRecipes.length ?
 					<Pagination className={s.pagination} recipesPerPage={recipesPerPage} totalRecipes={recipesLoaded.length} paginate={paginate} currentPage={currentPage} />
-					: null
+					: <div className={s.message}>No recipes for display right now. Go search some!</div>
 				}
 				<div className={s.home}>
 					<div className={s.order}>
@@ -109,7 +110,6 @@ export default function Home() {
 						</div>
 					</div>
 					<div className={s.recipes}>
-
 						{loading ?
 							<div className={s.loading}>
 								<div>Results (if any) should appear below:</div>
@@ -181,13 +181,11 @@ export default function Home() {
 							</div >
 							: (recipesFiltered.length) ?
 								currentRecipesFiltered.map(recipe => <div key={recipe.id}><RecipeCards recipeInfo={recipe} /></div>)
-								: null
+								: <div className={s.message_filtered}>Sorry! It seems there are no recipes for such diet...</div>
 						}
 					</div>
 				</div>
 			</div>
-
-
 		);
 	};
 };

@@ -20,6 +20,8 @@
 	height: auto;
 	border: 3px solid black;
 	border-radius: 10px;
+
+	max-width: 800px;
 }
 
 .recipe_container {
@@ -58,10 +60,10 @@
 	font-style: italic;
 }
 
-.emoji{
-	/* border: 2px solid blue; */
+/* .emoji{
+	border: 2px solid blue;
 
-}
+} */
 .spangrid {
 	margin: 2px 0px;
 	display: grid;
@@ -72,4 +74,19 @@
 .emoji span {
 	margin:0px 2px;
 	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+
+.text {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 700px;
+	margin-top: 5px;
+
+}
+
+.titles {
+	font-weight: 700;
+	font-style: italic;
 }

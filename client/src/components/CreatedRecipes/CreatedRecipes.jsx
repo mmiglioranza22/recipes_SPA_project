@@ -29,16 +29,18 @@ export default function CreatedRecipes() {
 										</div>
 										
 										</div>
-										<div>Summary:</div>
+										<div className={s.text}>
+										<div className={s.titles}>Summary:</div>
 										{typeof r.summary === 'string' ? r.summary : <div>No summary was provided for this recipe</div>}
-										<div>Instructions:</div>
+										<div className={s.titles}>Instructions:</div>
 										{typeof r.instructions === 'string' ? r.instructions : <div>No particular instructions. Proceed as you please.</div>}
 									</div>
-									<div>Score:</div>
+									</div>
+									<div className={s.titles}>Score:</div>
 									{r.score ? <span>{r.score}</span> : <span>Not scored (Hmm...suspicious...)</span>}
-									<div>Heath score:</div>
+									<div className={s.titles}>Heath score:</div>
 									{r.healthScore ? <span>{r.healthScore}</span> : <span>Not scored (Or not healthy at all!)</span>}
-									<div>Dish type:</div>
+									<div className={s.titles}>Dish type:</div>
 									<div>This recipe can be prepared for all dishes and meals!</div>
 									<br />
 

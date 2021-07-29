@@ -24,13 +24,15 @@ const { conn, Diet, Recipe } = require('./src/db.js');
 
 const dietTypes = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian', 'ovo vegetarian','lacto ovo vegetarian', 'vegan', 'pescatarian', 'paleo', 'primal', 'whole30', 'dairy free'];
 
+
+
 conn.sync({ force: true })
 .then(() => {
-  server.listen(3002, () => {
-    console.log('%s listening at 3002'); // eslint-disable-line no-console
+  server.listen(3001, () => {
+    console.log('%s listening at 3001'); // eslint-disable-line no-console
 
-    dietTypes.map( async (diet) => {
-      await Diet.create({
+    dietTypes.map( (diet) => {
+      Diet.create({
         name: diet
       })
     })
@@ -38,3 +40,4 @@ conn.sync({ force: true })
     console.log('Dietas precargadas')
   });
 });
+

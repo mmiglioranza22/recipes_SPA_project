@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearError, getRecipes } from '../../actions/actions';
 import s from './SearchBar.module.css';
@@ -7,6 +7,10 @@ import s from './SearchBar.module.css';
 export default function SearchBar () {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState({ name: '' });
+
+	// useEffect(()=> {
+	// 	dispatch(getRecipes('pasta'))
+	// }, [dispatch]);
 
 	const handleChange = (e) => {
 		setInput( prev => {

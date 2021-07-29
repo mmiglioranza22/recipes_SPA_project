@@ -22,6 +22,16 @@ export function getDiets() {
 export function getRecipes(name) {
 	return function (dispatch) {
 		dispatch(toggleLoading());
+		if(!name) {
+			return axios.get(`${BASE_URL}/recipes`) // randomly searches for recipes when starts
+			.then(json => {
+				dispatch({ type: GET_RECIPES, payload: json.data });
+			})
+			.catch(err => {
+				dispatch({type: ERROR})
+			});
+
+		}
 		return axios.get(`${BASE_URL}/recipes?name=${name}`)
 			.then(json => {
 				dispatch({ type: GET_RECIPES, payload: json.data });
