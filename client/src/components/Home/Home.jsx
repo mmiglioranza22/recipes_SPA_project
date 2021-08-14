@@ -5,7 +5,7 @@ import { lastScore, orderAZ, orderZA, topScore } from '../../orderFunctions';
 import Pagination from '../Pagination/Pagination';
 import { getDiets, getRecipes } from '../../actions/actions';
 import s from './Home.module.css'
-
+//comment
 
 export default function Home() {
 	let recipesLoaded = useSelector(state => state.recipesLoaded)
@@ -161,7 +161,7 @@ export default function Home() {
 					<div className={s.filter}>
 						<div>Diet type:</div>
 						<div className={s.diets}>
-						{recipesFiltered.length ? <div>All '{filter}' recipes are displayed above /</div> : <div>No recipes founded for '{filter}' diet /</div>}
+							{recipesFiltered.length ? <div>All '{filter}' recipes are displayed above /</div> : <div>No recipes founded for '{filter}' diet /</div>}
 							<span>Reset</span><input type='radio' name='dietTypes' value='reset' onClick={handleApply} />
 						</div>
 					</div>
