@@ -1,7 +1,7 @@
 # Individual Project - Food recipes SPA
 
 ### About: Introduction and tecnologies
-In this website you will be able to search for recipes using multiple filters and you can also create your own recipes. This project was an individual assignment requested at soyHenry's bootcamp.
+In this SPA you will be able to search for recipes using multiple filters and you can also create your own recipes. This project was an individual assignment requested at soyHenry's bootcamp.
 
 *Front-end*: React.js, Redux.js, plain CSS / CSS Modules.
 
@@ -18,7 +18,7 @@ In this website you will be able to search for recipes using multiple filters an
 - Install all dependencies inside ./client folder
 - Create a postgres database ('food')
 - Go to https://spoonacular.com/ and create an account in order to obtain an apiKey
-- Once you have your apiKey, create a .env file in ./api. with the following:
+- Once you have your apiKey, create a .env file in ./api with the following:
     - DB_USER={your postgres username}
     - DB_PASSWORD={your postgres password}
     - DB_HOST=localhost
@@ -29,9 +29,9 @@ In this website you will be able to search for recipes using multiple filters an
 - Open another terminal and run "npm start" on ./client
 
 ## Disclaimer
-All images shown in this project were obtained from the internet and are used with the sole and unique intention of fulfilling an educational assignment. This project is not intended nor allowed to be used for commercial purposes nor the like. No legal ownership nor copyright is claimed on the above-mentioned images, belonging to their rightful owners. If you have comments or complaints in this regard, please contact me at mmiglioranza22@gmail.com for further discussion.
+All images shown in this project were obtained from the internet and are used with the sole and unique intention of fulfilling an educational assignment. This project is not intended nor allowed to be used for commercial purposes or the like. No legal ownership or copyright is claimed on the above-mentioned images, belonging to their rightful owners. If you have comments or complaints in this regard, please contact me at mmiglioranza22@gmail.com for further discussion.
 
-The project does not contain a fully developed CRUD since it was not requested, yet their development and implementation will eventualy be uploaded to a final version. Same thing for testing.
+The project does not contain a fully developed CRUD since it was not requested for this project, yet its development and implementation will eventualy be uploaded to a final version. Same thing for testing.
 
 ## Preview (desktop):
 ### Landing page
