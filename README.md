@@ -1,22 +1,27 @@
-# Individual Project - Food recipes SPA
+# Individual Project - Food recipes SPA - [Link to site](https://recipes-spa-project.vercel.app/)
 
 ### About: Introduction and tecnologies
-In this SPA you will be able to search for recipes using multiple filters and you can also create your own recipes. This project was an individual assignment requested at soyHenry's bootcamp.
+In this SPA you will be able to search for recipes using multiple filters and you can also create your own recipes. This project was an individual assignment requested at soyHenry's bootcamp (and my first proyect ever!)
 
 *Front-end*: React.js, Redux.js, plain CSS / CSS Modules.
 
 *Back-end*: Node.js, Express.js
 
-*DB*: PostgreSQL, Sequelize
+*DB*: PostgreSQL (ORM: Sequelize)
 
 *External API*: [Spoonacular](https://spoonacular.com/food-api)
 
+*Deploy*: Heroku & Vercel (followed the [best step-by-step deploy guide](https://github.com/Zven7/Guia-Deploy) from [Zven7](https://github.com/Zven7))
 
-## Installation
 
-- Install all dependencies inside ./api folder
-- Install all dependencies inside ./client folder
-- Create a postgres database ('food')
+## Installation (run from localhost)
+
+*You'll need Nodejs, Git and PostgreSQL installed in your computer*
+
+- Clone this repo in a new folder/directory in your machine
+- Install all dependencies inside ./api folder (npm install)
+- Install all dependencies inside ./client folder (same thing)
+- Create a postgres database (name it 'food')
 - Go to https://spoonacular.com/ and create an account in order to obtain an apiKey
 - Once you have your apiKey, create a .env file in ./api with the following:
     - DB_USER={your postgres username}
