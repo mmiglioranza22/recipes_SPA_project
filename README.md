@@ -16,7 +16,7 @@ In this SPA you will be able to search for recipes using multiple filters and yo
 
 ## Installation (run from localhost)
 
-*You'll need Nodejs, Git and PostgreSQL installed in your computer*
+*You'll need Nodejs and PostgreSQL installed in your computer*
 
 - Clone this repo in a new folder/directory in your machine
 - Install all dependencies inside ./api folder (npm install)
