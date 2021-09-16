@@ -11,7 +11,7 @@ In this SPA you will be able to search for recipes using multiple filters and yo
 
 *External API*: [Spoonacular](https://spoonacular.com/food-api)
 
-*Deploy*: Heroku & Vercel (followed the [best step-by-step deploy guide](https://github.com/Zven7/Guia-Deploy) from [Zven7](https://github.com/Zven7))
+*Deploy*: Heroku & Vercel (I followed the [best step-by-step deploy guide](https://github.com/Zven7/Guia-Deploy) from [Zven7](https://github.com/Zven7))
 
 
 ## Installation (run from localhost)
