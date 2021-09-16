@@ -17,27 +17,36 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.js');
-const { conn, Diet, Recipe } = require('./src/db.js');
+const server = require("./src/app.js");
+const { conn, Diet, Recipe } = require("./src/db.js");
 
 // Syncing all the models at once.
 
-const dietTypes = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian', 'ovo vegetarian','lacto ovo vegetarian', 'vegan', 'pescatarian', 'paleo', 'primal', 'whole30', 'dairy free'];
+const dietTypes = [
+  "gluten free",
+  "ketogenic",
+  "vegetarian",
+  "lacto vegetarian",
+  "ovo vegetarian",
+  "lacto ovo vegetarian",
+  "vegan",
+  "pescatarian",
+  "paleo",
+  "primal",
+  "whole30",
+  "dairy free",
+];
 
-
-
-conn.sync({ force: true })
-.then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
-
-    dietTypes.map( (diet) => {
+conn.sync({ force: false }).then(() => {
+  server.listen(process.env.PORT || 3001, () => {
+    // conexion para Heroku
+    console.log("%s listening at 3001"); // eslint-disable-line no-consol
+    dietTypes.map((diet) => {
       Diet.create({
-        name: diet
-      })
-    })
+        name: diet,
+      });
+    });
 
-    console.log('Dietas precargadas')
+    console.log("Dietas precargadas");
   });
 });
-
