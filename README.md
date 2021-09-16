@@ -1,4 +1,4 @@
-#Food recipes SPA - [Link to site](https://recipes-spa-project.vercel.app/)
+# Food recipes SPA - [Link to site](https://recipes-spa-project.vercel.app/)
 
 ### About
 In this SPA you will be able to search for recipes using multiple filters and you can also create your own recipes. This project was an individual assignment requested at soyHenry's bootcamp (and my first proyect ever!)
