@@ -38,7 +38,7 @@ const dietTypes = [
 ];
 
 conn.sync({ force: false }).then(() => {
-  server.listen(process.env.PORT || 3001, () => {
+  server.listen(process.env.PORT, () => {
     // conexion para Heroku
     console.log("%s listening at 3001"); // eslint-disable-line no-consol
     dietTypes.map((diet) => {
