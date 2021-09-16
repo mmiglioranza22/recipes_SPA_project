@@ -37,8 +37,8 @@ const dietTypes = [
   "dairy free",
 ];
 
-conn.sync({ force: false }).then(() => {
-  server.listen(process.env.PORT, () => {
+conn.sync({ force: true }).then(() => {
+  server.listen(process.env.PORT || 3001, () => {
     // conexion para Heroku
     console.log("%s listening at 3001"); // eslint-disable-line no-consol
     dietTypes.map((diet) => {
