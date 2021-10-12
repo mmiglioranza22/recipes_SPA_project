@@ -3,15 +3,15 @@
 ### About
 In this SPA you will be able to search for recipes using multiple filters and you can also create your own recipes. This project was an individual assignment requested at soyHenry's bootcamp (and my first proyect ever!)
 
-*Front-end*: React.js, Redux.js, plain CSS / CSS Modules.
+- *Front-end*: React.js, Redux.js, plain CSS / CSS Modules.
 
-*Back-end*: Node.js, Express.js
+- *Back-end*: Node.js, Express.js
 
-*DB*: PostgreSQL (ORM: Sequelize)
+- *DB*: PostgreSQL (ORM: Sequelize)
 
-*External API*: [Spoonacular](https://spoonacular.com/food-api)
+- *External API*: [Spoonacular](https://spoonacular.com/food-api)
 
-*Deploy*: Heroku & Vercel (I followed the [best step-by-step deploy guide](https://github.com/Zven7/Guia-Deploy) from [Zven7](https://github.com/Zven7))
+- *Deploy*: Heroku & Vercel (I followed the [best step-by-step deploy guide](https://github.com/Zven7/Guia-Deploy) from [Zven7](https://github.com/Zven7))
 
 
 ## Installation (run from localhost)
