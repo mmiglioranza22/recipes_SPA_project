@@ -24,14 +24,15 @@ In this SPA you will be able to search for recipes using multiple filters and yo
 - Create a postgres database (name it 'food')
 - Go to https://spoonacular.com/ and create an account in order to obtain an apiKey
 - Once you have your apiKey, create a .env file in ./api with the following:
-    - DB_USER={your postgres username}
-    - DB_PASSWORD={your postgres password}
-    - DB_HOST=localhost
-    - DB_NAME={your postgres database name}
-    - API_KEY_1={your spoonacular apiKey}
+    
+        DB_USER={your postgres username}
+        DB_PASSWORD={your postgres password}
+        DB_HOST=localhost
+        DB_NAME={your postgres database name}
+        API_KEY_1={your spoonacular apiKey}
 
-- Open a terminal and run "npm start" on ./api
-- Open another terminal and run "npm start" on ./client
+- Open a terminal and run ```npm start``` on ./api
+- Open another terminal and run ```npm start``` on ./client
 
 ## Disclaimer
 All images shown in this project were obtained from the internet and are used with the sole and unique intention of fulfilling an educational assignment. This project is not intended nor allowed to be used for commercial purposes or the like. No legal ownership or copyright is claimed on the above-mentioned images, belonging to their rightful owners. If you have comments or complaints in this regard, please contact me at mmiglioranza22@gmail.com for further discussion.
